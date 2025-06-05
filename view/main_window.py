@@ -10,6 +10,8 @@ from view.pages.page_one import PageOne
 from view.pages.page_two import PageTwo
 from view.pages.setting_page import SettingInterface
 
+import resource_rc
+
 
 class MainWindow(FluentWindow):
     """ 主界面 """
@@ -45,7 +47,7 @@ class MainWindow(FluentWindow):
     def init_window(self):
         if sys.platform != "darwin":
             self.setWindowIcon(QIcon(':/resource/images/logo.png'))
-            self.setWindowTitle('MyApp')
+            self.setWindowTitle('学生成绩分析工具')
         self.resize(900, 700)
         # 把窗口放在屏幕中间
         self.move((self.screen().size().width() - self.width()) / 2,

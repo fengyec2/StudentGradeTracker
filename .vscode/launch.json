@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run pack_resources.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/pack_resources.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Run entry.py after pack_resources.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/entry.py",
+            "console": "integratedTerminal",
+            "preLaunchTask": "Run pack_resources.py"
+        }
+    ]
+}

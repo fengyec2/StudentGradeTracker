@@ -3,7 +3,7 @@ from PySide6.QtCore import Qt, QUrl, Signal
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QWidget, QLabel
 from qfluentwidgets import FluentIcon as FIcon, CustomColorSettingCard, setThemeColor, InfoBarPosition, qconfig
-from qfluentwidgets import (SettingCardGroup, SwitchSettingCard, OptionsSettingCard, PrimaryPushSettingCard, ScrollArea,
+from qfluentwidgets import (SettingCardGroup, OptionsSettingCard, PrimaryPushSettingCard, ScrollArea,
                             ExpandLayout, InfoBar, setTheme)
 
 from common.config import cfg, FEEDBACK_URL, VERSION, YEAR, AUTHOR
@@ -25,26 +25,7 @@ class SettingInterface(ScrollArea):
         self.settingLabel = QLabel("设置", self)
         self.settingLabel.setObjectName('settingLabel')
 
-        # personalization
-        self.personalGroup = SettingCardGroup("账号设置", self.scrollWidget)
-        self.save_password = SwitchSettingCard(
-            MyIcon.SAVE,
-            '保存密码', '是否需要加密保存你的密码',
-            configItem=cfg.save_password,
-            parent=self.personalGroup
-        )
-        self.auto_login = SwitchSettingCard(
-            MyIcon.SAVE_SESSION,
-            "自动登录", "下次打开软件是否自动登录",
-            configItem=cfg.auto_login,
-            parent=self.personalGroup
-        )
-        self.logoutCard = PrimaryPushSettingCard(
-            '退出',
-            FIcon.EMBED,
-            '退出登录', '退出当前登录的账号，下次你必须重新登录',
-            self.personalGroup
-        )
+        # account settings removed
 
         # application
         self.aboutGroup = SettingCardGroup('关于', self.scrollWidget)
@@ -89,15 +70,13 @@ class SettingInterface(ScrollArea):
 
     def __init_layout(self):
         self.settingLabel.move(20, 20)
-        self.personalGroup.addSettingCard(self.save_password)
-        self.personalGroup.addSettingCard(self.auto_login)
-        self.personalGroup.addSettingCard(self.logoutCard)
+        # Removed personalization group and cards
         self.aboutGroup.addSettingCard(self.themeCard)
         self.aboutGroup.addSettingCard(self.themeColorCard)
         self.aboutGroup.addSettingCard(self.aboutCard)
         self.expandLayout.setSpacing(28)
         self.expandLayout.setContentsMargins(60, 0, 60, 0)
-        self.expandLayout.addWidget(self.personalGroup)
+        # Removed personalGroup from layout
         self.expandLayout.addWidget(self.aboutGroup)
         self.scrollWidget.setObjectName('scrollWidget')
         self.settingLabel.setObjectName('settingLabel')
@@ -114,19 +93,12 @@ class SettingInterface(ScrollArea):
             parent=self
         )
 
-    def __logout(self):
-        def do_logout():
-            qconfig.set(cfg.password, '')
-            qconfig.set(cfg.auto_login, False)
-            self._parent.close()
-        show_dialog(self, '退出登录', '提示',callback= do_logout)
-
+    # Removed __logout method and logoutCard signal connections
 
     def __connect_signal_to_slot(self):
         """ connect signal to slot """
         cfg.appRestartSig.connect(self.__show_restart_tooltip)
         cfg.themeChanged.connect(setTheme)
         self.themeColorCard.colorChanged.connect(setThemeColor)
-        # about
-        self.logoutCard.clicked.connect(self.__logout)
+        # Removed logoutCard and aboutCard signal connections
         self.aboutCard.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(FEEDBACK_URL)))

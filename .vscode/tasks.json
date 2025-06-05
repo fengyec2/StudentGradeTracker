@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run pack_resources.py",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "${workspaceFolder}/pack_resources.py"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
