@@ -1,45 +1,113 @@
 import os
 import json
-from datetime import datetime
-from PySide6.QtCore import QObject
 from PySide6.QtWidgets import QMessageBox
+from PySide6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis, QCategoryAxis
+from PySide6.QtGui import QPainter, QStandardItem
+from PySide6.QtCore import QPointF, Qt
+from common.my_logger import my_logger as logger
+from common.utils import show_dialog
 
-class PageTwoHandler(QObject):
-    def __init__(self, parent: 'PageTwo'):
-        super().__init__(parent)
-        self._parent = parent
-        self.student_data = []
+DATA_DIR = "data"
+STUDENT_DIR = os.path.join(DATA_DIR, "students")
+EXAM_META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
 
-    def load_students(self):
-        data_dir = './data/students'
-        self.student_data.clear()
-        names = []
 
-        if os.path.exists(data_dir):
-            for file in os.listdir(data_dir):
-                if file.endswith('.json'):
-                    filepath = os.path.join(data_dir, file)
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        try:
-                            data = json.load(f)
-                            self.student_data.append(data)
-                            names.append(data.get('student', '未知'))
-                        except Exception as e:
-                            print(f"读取失败 {file}: {e}")
-        self._parent.set_student_list(names)
+class PageTwoHandler:
+    def __init__(self, ui):
+        self.ui = ui
 
-    def on_student_selected(self, index):
-        student_name = index.data()
-        student = next((s for s in self.student_data if s.get('student') == student_name), None)
-        if not student:
-            QMessageBox.warning(self._parent, '错误', '未找到学生数据')
+    def load_exam_meta(self):
+        try:
+            with open(EXAM_META_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            logger.exception(e)
+            show_dialog(parent=None, content=f'无法读取考试元数据:{e}')
+            return {"exams_order": []}
+
+    def load_student_list(self, model):
+        model.clear()
+        for filename in os.listdir(STUDENT_DIR):
+            if filename.endswith(".json"):
+                student_name = os.path.splitext(filename)[0]
+                model.appendRow(QStandardItem(student_name))
+        self.exam_meta = self.load_exam_meta()
+
+    def plot_student_ranks(self, student_name):
+        filepath = os.path.join(STUDENT_DIR, f"{student_name}.json")
+        if not os.path.exists(filepath):
+            show_dialog(parent=None, content=f'未找到学生文件：{student_name}')
             return
 
-        exams = student.get('exams', [])
-        # 按照日期升序排列
-        exams.sort(key=lambda e: e.get('real_date', ''))
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                student_data = json.load(f)
+        except Exception as e:
+            logger.exception(e)
+            show_dialog(parent=None, content=f'读取学生数据失败：{e}')
+            return
 
-        x_labels = [e.get('real_date', '') for e in exams]
-        y_values = [e.get('rank', 0) for e in exams]
+        exams = student_data.get("exams", [])
+        exam_display_map = {
+            exam["filename"]: exam["display_name"]
+            for exam in self.exam_meta.get("exams_order", [])
+        }
 
-        self._parent.plot_rank_trend(x_labels, y_values, student_name)
+        # 根据 exam_meta 中的顺序排序
+        filename_order = [e["filename"] for e in self.exam_meta.get("exams_order", [])]
+        sorted_exams = sorted(
+            exams,
+            key=lambda x: filename_order.index(x["filename"]) if x["filename"] in filename_order else -1
+        )
+
+        # 创建折线图数据
+        series = QLineSeries()
+        axis_x = QCategoryAxis()
+        axis_y = QValueAxis()
+        axis_y.setTitleText("年级排名")
+        axis_y.setLabelFormat("%d")
+        axis_y.setRange(0, 1000)  # 默认范围，可动态调整
+
+        point_list = []
+
+        for i, exam in enumerate(sorted_exams):
+            filename = exam["filename"]
+            rank = exam.get("rank", None)
+            if rank is None:
+                continue
+            display_name = exam_display_map.get(filename, filename)
+            point = QPointF(i, rank)
+            series.append(point)
+            axis_x.append(display_name, i)
+            point_list.append(rank)
+
+        if not point_list:
+            show_dialog(parent=None, content='该学生暂无可绘制的排名数据')
+            return
+
+        max_rank = max(point_list)
+        axis_y.setRange(0, max(max_rank + 50, 100))
+
+        chart = QChart()
+        chart.addSeries(series)
+        chart.setTitle(f"{student_name} - 年级排名变化图")
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+        chart.addAxis(axis_x, Qt.AlignmentFlag.AlignBottom)
+        chart.addAxis(axis_y, Qt.AlignmentFlag.AlignLeft)
+        series.attachAxis(axis_x)
+        series.attachAxis(axis_y)
+
+        chart.legend().hide()
+
+        # 清空旧图表并显示新图表
+        chart_view = QChartView(chart)
+        chart_view.setRenderHint(QPainter.Antialiasing)
+
+        layout = self.ui.verticalLayout_2
+        while layout.count() > 2:  # 保留前两个按钮
+            item = layout.takeAt(2)
+            widget = item.widget()
+            if widget:
+                widget.setParent(None)
+
+        layout.addWidget(chart_view)

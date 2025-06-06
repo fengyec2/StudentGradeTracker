@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QListView,
-    QSizePolicy, QTableView, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QListView, QSizePolicy,
+    QVBoxLayout, QWidget)
 
 from qfluentwidgets import PushButton
 
@@ -69,11 +69,6 @@ class Ui_page_two(object):
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
 
-        self.tableView = QTableView(self.horizontalLayoutWidget)
-        self.tableView.setObjectName(u"tableView")
-
-        self.horizontalLayout.addWidget(self.tableView)
-
 
         self.retranslateUi(page_two)
 
@@ -82,7 +77,7 @@ class Ui_page_two(object):
 
     def retranslateUi(self, page_two):
         page_two.setWindowTitle(QCoreApplication.translate("page_two", u"Form", None))
-        self.pushButton.setText(QCoreApplication.translate("page_two", u"\u5bfc\u5165", None))
+        self.pushButton.setText(QCoreApplication.translate("page_two", u"\u5237\u65b0\u5217\u8868", None))
         self.pushButton_2.setText(QCoreApplication.translate("page_two", u"\u8017\u65f6\u64cd\u4f5c\u6f14\u793a", None))
     # retranslateUi
 

@@ -54,7 +54,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>导入</string>
+         <string>刷新列表</string>
         </property>
        </widget>
       </item>
@@ -72,9 +72,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QTableView" name="tableView"/>
     </item>
    </layout>
   </widget>
