@@ -99,8 +99,12 @@ class PageOneHandler(QObject):
             show_dialog(self._parent, f"读取 Excel 文件失败：{e}")
             return
 
+        if "姓名" not in df.columns or "级名" not in df.columns:
+            show_dialog(self._parent, "Excel 中必须包含 '姓名' 和 '级名' 两列")
+            return
+
         preview_info = {
-            "subjects": len(df.columns) - 1,  # 默认第一列是姓名
+            "subjects": len(df.columns) - 2,  # 排除“姓名”和“级名”
             "students": df.shape[0]
         }
 
@@ -114,13 +118,13 @@ class PageOneHandler(QObject):
         os.makedirs(EXAMS_DIR, exist_ok=True)
         shutil.copy(filepath, saved_path)
 
-        # 更新学生数据
         os.makedirs(STUDENTS_DIR, exist_ok=True)
         for _, row in df.iterrows():
             name = row["姓名"]
+            rank = row.get("级名", None)
             subjects = [
                 {"subject": col, "score": row[col], "rank": None}
-                for col in df.columns if col != "姓名"
+                for col in df.columns if col not in ["姓名", "级名"]
             ]
             student_path = os.path.join(STUDENTS_DIR, f"{name}.json")
             if os.path.exists(student_path):
@@ -133,13 +137,12 @@ class PageOneHandler(QObject):
                 "filename": filename,
                 "real_date": real_date.strftime("%Y-%m-%d"),
                 "subjects": subjects,
-                "totalScore": sum([s["score"] for s in subjects if pd.notna(s["score"])]),
+                "rank": int(rank) if pd.notna(rank) else None
             })
 
             with open(student_path, "w", encoding="utf-8") as f:
                 json.dump(student_data, f, ensure_ascii=False, indent=2)
 
-        # 更新 meta 文件
         if os.path.exists(META_PATH):
             with open(META_PATH, "r", encoding="utf-8") as f:
                 meta = json.load(f)

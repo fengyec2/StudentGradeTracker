@@ -20,9 +20,9 @@ class Config(MyQConfig):
 
 
 YEAR = datetime.datetime.now().year
-AUTHOR = "Cheukfung"
-VERSION = '0.0.1'
-FEEDBACK_URL = "https://github.com/Cheukfung"
+AUTHOR = "fengyec_2"
+VERSION = '0.0.2'
+FEEDBACK_URL = "https://github.com/fengyec2"
 
 cfg = Config()
 # qconfig.themeColor = ColorConfigItem("QFluentWidgets", "ThemeColor", '#70d5f3')
