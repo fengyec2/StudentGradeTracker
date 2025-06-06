@@ -71,7 +71,32 @@ python build.py
 ## 🛠 项目结构
 
 ```
-
+├── api/                    # API接口层
+│   └── api.py              # 接口主模块
+├── common/                 # 通用工具库
+│   ├── aes.py              # AES加密模块
+│   ├── config.py           # 配置管理
+│   ├── my_logger.py        # 日志系统
+│   └── utils.py            # 通用工具类
+├── components/             # 自定义组件库
+├── resource/               # 资源文件目录
+├── ui_page/                # 页面UI文件目录
+├── ui_view/                # 登录界面UI文件
+├── view/                   # 视图层
+│   ├── login_window/       # 登录窗口模块
+│   │   ├── handler.py      # 登录逻辑处理
+│   │   └── window.py       # 登录窗口实现
+│   ├── pages/              # 功能页面
+│   │   ├── page_one.py              # 页面1视图
+│   │   ├── page_one_handler.py      # 页面1业务逻辑
+│   │   ├── page_two.py              # 页面2视图
+│   │   └── setting_page.py          # 设置页面
+│   └── main_window.py      # 主窗口控制器
+├── worker/                 # 异步任务管理
+│   └── TaskManager.py      # 任务管理器
+├── build.py                # 打包脚本
+├── entry.py                # 程序入口
+└── pack_resources.py       # 资源编译脚本
 ```
 
 ## 💡 最佳实践
@@ -143,7 +168,7 @@ data/
           "rank": 20
         }
       ],
-      "totalScore": 255,
+      "rank": 171,
     }
   ]
 }

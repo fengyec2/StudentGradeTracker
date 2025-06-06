@@ -6,38 +6,77 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>723</width>
-    <height>456</height>
+    <width>762</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="PushButton" name="pushButton">
+  <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>120</y>
-     <width>111</width>
-     <height>31</height>
+     <x>50</x>
+     <y>70</y>
+     <width>631</width>
+     <height>351</height>
     </rect>
    </property>
-   <property name="text">
-    <string>测试按钮</string>
-   </property>
-  </widget>
-  <widget class="PushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>190</y>
-     <width>111</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>耗时操作演示</string>
-   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QListView" name="listView">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="PushButton" name="pushButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>导入</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="PushButton" name="pushButton_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>耗时操作演示</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTableView" name="tableView"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <customwidgets>

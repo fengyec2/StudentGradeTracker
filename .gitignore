@@ -163,3 +163,6 @@ logs
 resource_rc.py
 ui_view/ui_login_window.py
 view/ui_main_window.py
+data/exams/*
+data/students/*
+data/*.json

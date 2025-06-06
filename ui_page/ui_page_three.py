@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'page_one.ui'
+## Form generated from reading UI file 'page_three.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.0
 ##
@@ -20,12 +20,12 @@ from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QListView
 
 from qfluentwidgets import PushButton
 
-class Ui_page_one(object):
-    def setupUi(self, page_one):
-        if not page_one.objectName():
-            page_one.setObjectName(u"page_one")
-        page_one.resize(762, 582)
-        self.horizontalLayoutWidget = QWidget(page_one)
+class Ui_page_three(object):
+    def setupUi(self, page_three):
+        if not page_three.objectName():
+            page_three.setObjectName(u"page_three")
+        page_three.resize(762, 582)
+        self.horizontalLayoutWidget = QWidget(page_three)
         self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
         self.horizontalLayoutWidget.setGeometry(QRect(50, 70, 631, 351))
         self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
@@ -75,14 +75,14 @@ class Ui_page_one(object):
         self.horizontalLayout.addWidget(self.tableView)
 
 
-        self.retranslateUi(page_one)
+        self.retranslateUi(page_three)
 
-        QMetaObject.connectSlotsByName(page_one)
+        QMetaObject.connectSlotsByName(page_three)
     # setupUi
 
-    def retranslateUi(self, page_one):
-        page_one.setWindowTitle(QCoreApplication.translate("page_one", u"Form", None))
-        self.pushButton.setText(QCoreApplication.translate("page_one", u"\u5bfc\u5165", None))
-        self.pushButton_2.setText(QCoreApplication.translate("page_one", u"\u8017\u65f6\u64cd\u4f5c\u6f14\u793a", None))
+    def retranslateUi(self, page_three):
+        page_three.setWindowTitle(QCoreApplication.translate("page_three", u"Form", None))
+        self.pushButton.setText(QCoreApplication.translate("page_three", u"\u5bfc\u5165", None))
+        self.pushButton_2.setText(QCoreApplication.translate("page_three", u"\u8017\u65f6\u64cd\u4f5c\u6f14\u793a", None))
     # retranslateUi
 

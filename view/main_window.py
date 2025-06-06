@@ -8,6 +8,7 @@ from components.icon import MyIcon
 from qfluentwidgets import FluentIcon as FIF
 from view.pages.page_one import PageOne
 from view.pages.page_two import PageTwo
+from view.pages.page_three import PageThree
 from view.pages.setting_page import SettingInterface
 
 import resource_rc
@@ -27,6 +28,7 @@ class MainWindow(FluentWindow):
         self.settingInterface = SettingInterface(self)
         self.pageOne = PageOne(self)
         self.pageTwo = PageTwo(self)
+        self.pageThree = PageThree(self)
         self.init_navigation()
         self.init_window()
 
@@ -36,8 +38,9 @@ class MainWindow(FluentWindow):
     def init_navigation(self):
         # 新增页面需要再此处添加
         sub_interface_list = [
-            {'widget': self.pageOne, 'icon': MyIcon.CLICK, 'text': '页面一'},
-            {'widget': self.pageTwo, 'icon': MyIcon.EXCEL, 'text': '页面二'}
+            {'widget': self.pageOne, 'icon': MyIcon.CLICK, 'text': '原始文件'},
+            {'widget': self.pageTwo, 'icon': MyIcon.EXCEL, 'text': '成绩曲线'},
+            {'widget': self.pageThree, 'icon': MyIcon.TOOL, 'text': '个人成绩'}
         ]
         for item in sub_interface_list:
             self.addSubInterface(item['widget'], item['icon'], item['text'])

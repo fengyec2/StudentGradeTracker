@@ -1,9 +1,8 @@
 from PySide6.QtWidgets import QWidget
-
 from common.utils import show_dialog
-from components.bar import ProgressInfoBar
+from components.bar import ProgressInfoBar 
 from ui_page.ui_page_one import Ui_page_one
-from view.pages.page_one_handler import PageOneHandler
+from view.pages.page_one_handler import PageOneHandler 
 
 
 class PageOne(QWidget, Ui_page_one):
@@ -12,11 +11,6 @@ class PageOne(QWidget, Ui_page_one):
         self.loading_bar = None
         self.setupUi(self)
         self.handler = PageOneHandler(self)
-        self.bind_event()
-
-    def bind_event(self):
-        self.pushButton.clicked.connect(self.handler.do_something) # 绑定事件
-        self.pushButton_2.clicked.connect(self.handler.do_something_async)
 
     def show_state_tooltip(self, title, content):
         self.loading_bar = ProgressInfoBar(title, content, self)
