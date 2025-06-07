@@ -25,15 +25,9 @@ class Ui_page_two(object):
         if not page_two.objectName():
             page_two.setObjectName(u"page_two")
         page_two.resize(762, 582)
-        self.horizontalLayoutWidget = QWidget(page_two)
-        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
-        self.horizontalLayoutWidget.setGeometry(QRect(0, 70, 751, 351))
-        self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout = QHBoxLayout(page_two)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.listView = QListView(self.horizontalLayoutWidget)
+        self.listView = QListView(page_two)
         self.listView.setObjectName(u"listView")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -42,14 +36,9 @@ class Ui_page_two(object):
         self.listView.setSizePolicy(sizePolicy)
         self.listView.setMaximumSize(QSize(16777215, 16777215))
 
-        self.verticalLayout.addWidget(self.listView)
+        self.horizontalLayout.addWidget(self.listView)
 
-
-        self.horizontalLayout.addLayout(self.verticalLayout)
-
-        self.verticalLayout_2 = QVBoxLayout()
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.pushButton = PrimaryPushButton(self.horizontalLayoutWidget)
+        self.pushButton = PrimaryPushButton(page_two)
         self.pushButton.setObjectName(u"pushButton")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
@@ -61,10 +50,15 @@ class Ui_page_two(object):
         font.setFamilies([u"Microsoft YaHei"])
         self.pushButton.setFont(font)
 
-        self.verticalLayout_2.addWidget(self.pushButton)
+        self.horizontalLayout.addWidget(self.pushButton)
 
+        self.chartWidget = QWidget(page_two)
+        self.chartWidget.setObjectName(u"chartWidget")
+        self.chartLayout = QVBoxLayout(self.chartWidget)
+        self.chartLayout.setObjectName(u"chartLayout")
+        self.chartLayout.setContentsMargins(0, 0, 0, 0)
 
-        self.horizontalLayout.addLayout(self.verticalLayout_2)
+        self.horizontalLayout.addWidget(self.chartWidget)
 
 
         self.retranslateUi(page_two)

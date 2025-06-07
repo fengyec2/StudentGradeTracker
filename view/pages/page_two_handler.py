@@ -1,6 +1,6 @@
 import os
 import json
-from PySide6.QtWidgets import QMessageBox
+from PySide6.QtWidgets import QMessageBox, QWidget
 from PySide6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis, QCategoryAxis
 from PySide6.QtGui import QPainter, QStandardItem
 from PySide6.QtCore import QPointF, Qt
@@ -53,20 +53,18 @@ class PageTwoHandler:
             for exam in self.exam_meta.get("exams_order", [])
         }
 
-        # 根据 exam_meta 中的顺序排序
         filename_order = [e["filename"] for e in self.exam_meta.get("exams_order", [])]
         sorted_exams = sorted(
             exams,
             key=lambda x: filename_order.index(x["filename"]) if x["filename"] in filename_order else -1
         )
 
-        # 创建折线图数据
         series = QLineSeries()
         axis_x = QCategoryAxis()
         axis_y = QValueAxis()
         axis_y.setTitleText("年级排名")
         axis_y.setLabelFormat("%d")
-        axis_y.setRange(0, 1000)  # 默认范围，可动态调整
+        axis_y.setRange(0, 1000)
 
         point_list = []
 
@@ -87,6 +85,7 @@ class PageTwoHandler:
 
         max_rank = max(point_list)
         axis_y.setRange(0, max(max_rank + 50, 100))
+        axis_y.setReverse(True)  # 反转 Y 轴
 
         chart = QChart()
         chart.addSeries(series)
@@ -96,18 +95,16 @@ class PageTwoHandler:
         chart.addAxis(axis_y, Qt.AlignmentFlag.AlignLeft)
         series.attachAxis(axis_x)
         series.attachAxis(axis_y)
-
         chart.legend().hide()
 
-        # 清空旧图表并显示新图表
         chart_view = QChartView(chart)
         chart_view.setRenderHint(QPainter.Antialiasing)
 
-        layout = self.ui.verticalLayout_2
-        while layout.count() > 1:  # 保留前两个按钮
-            item = layout.takeAt(1)
-            widget = item.widget()
-            if widget:
-                widget.setParent(None)
+        # 获取 chartWidget 的布局，清除旧图表并添加新图表
+        chart_layout = self.ui.chartWidget.layout()
+        while chart_layout.count():
+            item = chart_layout.takeAt(0)
+            if item.widget():
+                item.widget().setParent(None)
 
-        layout.addWidget(chart_view)
+        chart_layout.addWidget(chart_view)
