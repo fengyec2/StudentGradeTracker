@@ -1,0 +1,35 @@
+name: Build with Nuitka
+
+on:
+  push:
+    branches: [ pyside6, pyqt5 ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # 明确指定你的Python版本
+        
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt  # 关键：安装项目依赖
+        
+    - name: Run Nuitka build
+      run: python build.py  # 确保你的build.py已正确配置Nuitka
+      
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: bundled-app
+        path: |
+          dist/
+          *.bin
+          *.exe
