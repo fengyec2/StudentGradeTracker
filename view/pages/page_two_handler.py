@@ -5,10 +5,9 @@ from PySide6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis, QCateg
 from PySide6.QtGui import QPainter, QStandardItem
 from PySide6.QtCore import QPointF, Qt
 from common.my_logger import my_logger as logger
-from common.utils import show_dialog
+from common.utils import show_dialog, get_all_students, get_student_data, get_exam_display_name
 
 DATA_DIR = "data"
-STUDENT_DIR = os.path.join(DATA_DIR, "students")
 EXAM_META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
 
 
@@ -27,32 +26,17 @@ class PageTwoHandler:
 
     def load_student_list(self, model):
         model.clear()
-        for filename in os.listdir(STUDENT_DIR):
-            if filename.endswith(".json"):
-                student_name = os.path.splitext(filename)[0]
-                model.appendRow(QStandardItem(student_name))
+        for student in get_all_students():
+            model.appendRow(QStandardItem(student["name"]))
         self.exam_meta = self.load_exam_meta()
 
     def plot_student_ranks(self, student_name):
-        filepath = os.path.join(STUDENT_DIR, f"{student_name}.json")
-        if not os.path.exists(filepath):
-            show_dialog(parent=None, content=f'未找到学生文件：{student_name}')
-            return
-
-        try:
-            with open(filepath, "r", encoding="utf-8") as f:
-                student_data = json.load(f)
-        except Exception as e:
-            logger.exception(e)
-            show_dialog(parent=None, content=f'读取学生数据失败：{e}')
+        student_data = get_student_data(student_name)
+        if not student_data:
+            show_dialog(parent=None, content=f'未找到或读取学生文件失败：{student_name}')
             return
 
         exams = student_data.get("exams", [])
-        exam_display_map = {
-            exam["filename"]: exam["display_name"]
-            for exam in self.exam_meta.get("exams_order", [])
-        }
-
         filename_order = [e["filename"] for e in self.exam_meta.get("exams_order", [])]
         sorted_exams = sorted(
             exams,
@@ -73,7 +57,7 @@ class PageTwoHandler:
             rank = exam.get("rank", None)
             if rank is None:
                 continue
-            display_name = exam_display_map.get(filename, filename)
+            display_name = get_exam_display_name(filename)
             point = QPointF(i, rank)
             series.append(point)
             axis_x.append(display_name, i)
@@ -85,7 +69,7 @@ class PageTwoHandler:
 
         max_rank = max(point_list)
         axis_y.setRange(0, max(max_rank + 50, 100))
-        axis_y.setReverse(True)  # 反转 Y 轴
+        axis_y.setReverse(True)
 
         chart = QChart()
         chart.addSeries(series)
@@ -100,7 +84,6 @@ class PageTwoHandler:
         chart_view = QChartView(chart)
         chart_view.setRenderHint(QPainter.Antialiasing)
 
-        # 获取 chartWidget 的布局，清除旧图表并添加新图表
         chart_layout = self.ui.chartWidget.layout()
         while chart_layout.count():
             item = chart_layout.takeAt(0)
