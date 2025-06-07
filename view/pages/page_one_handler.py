@@ -105,7 +105,7 @@ class PageOneHandler(QObject):
             return
 
         preview_info = {
-            "subjects": len([col for col in df.columns if col not in ["姓名", "级名", "班级"]]),
+            "subjects": len([col for col in df.columns if col not in ["姓名", "级名", "班级", "考试编号"]]),
             "students": df.shape[0]
         }
 
