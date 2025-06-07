@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime
 
 from PySide6.QtCore import QObject, QAbstractListModel, Qt, QModelIndex
-from PySide6.QtWidgets import QFileDialog, QInputDialog, QDialog, QVBoxLayout, QLabel, QLineEdit, QDateEdit, QPushButton, QHBoxLayout
+from PySide6.QtWidgets import QFileDialog, QDialog, QVBoxLayout, QLabel, QLineEdit, QDateEdit, QPushButton, QHBoxLayout
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 
 from common.utils import show_dialog
@@ -99,12 +99,13 @@ class PageOneHandler(QObject):
             show_dialog(self._parent, f"读取 Excel 文件失败：{e}")
             return
 
-        if "姓名" not in df.columns or "级名" not in df.columns:
-            show_dialog(self._parent, "Excel 中必须包含 '姓名' 和 '级名' 两列")
+        required_columns = {"姓名", "级名", "班级"}
+        if not required_columns.issubset(set(df.columns)):
+            show_dialog(self._parent, "Excel 中必须包含 '姓名'、'级名' 和 '班级' 三列")
             return
 
         preview_info = {
-            "subjects": len(df.columns) - 2,  # 排除“姓名”和“级名”
+            "subjects": len([col for col in df.columns if col not in ["姓名", "级名", "班级"]]),
             "students": df.shape[0]
         }
 
@@ -121,17 +122,23 @@ class PageOneHandler(QObject):
         os.makedirs(STUDENTS_DIR, exist_ok=True)
         for _, row in df.iterrows():
             name = row["姓名"]
+            student_class = str(row.get("班级", "")).strip()
             rank = row.get("级名", None)
             subjects = [
                 {"subject": col, "score": row[col], "rank": None}
-                for col in df.columns if col not in ["姓名", "级名"]
+                for col in df.columns if col not in ["姓名", "级名", "班级"]
             ]
             student_path = os.path.join(STUDENTS_DIR, f"{name}.json")
+
             if os.path.exists(student_path):
                 with open(student_path, "r", encoding="utf-8") as f:
                     student_data = json.load(f)
             else:
-                student_data = {"student": name, "exams": []}
+                student_data = {"student": name, "class": student_class, "exams": []}
+
+            # 补充 class 字段（若缺失或为空）
+            if "class" not in student_data or not student_data["class"]:
+                student_data["class"] = student_class
 
             student_data["exams"].append({
                 "filename": filename,
