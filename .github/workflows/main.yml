@@ -15,26 +15,41 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'  # 明确指定你的Python版本
+        python-version: '3.10'
         
+    - name: Cache pip dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~\AppData\Local\pip\Cache
+          ~\AppData\Local\Temp\pip*
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install -r requirements.txt  # 关键：安装项目依赖
+        pip install -r requirements.txt
 
+    - name: Cache MinGW64
+      uses: actions/cache@v4
+      with:
+        path: ${{ runner.temp }}\mingw64
+        key: ${{ runner.os }}-mingw64-14.2.0
+        
     - name: Install MinGW64 (winlibs)
+      if: steps.cache-mingw.outputs.cache-hit != 'true'
       run: |
-        # 下载并安装 Nuitka 所需的 MinGW64
-        $url = "https://github.com/brechtsanders/winlibs_mingw/releases/download/15.1.0posix-12.0.0-ucrt-r1/winlibs-x86_64-posix-seh-gcc-15.1.0-mingw-w64ucrt-12.0.0-r1.zip"
+        $url = "https://github.com/brechtsanders/winlibs_mingw/releases/download/14.2.0posix-19.1.1-12.0.0-msvcrt-r2/winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64msvcrt-12.0.0-r2.zip"
         $tempDir = "$env:TEMP\mingw64"
         New-Item -Path $tempDir -ItemType Directory -Force
         Invoke-WebRequest -Uri $url -OutFile "$tempDir\mingw64.zip"
         Expand-Archive -Path "$tempDir\mingw64.zip" -DestinationPath "$tempDir"
-        # 将 MinGW64 添加到 PATH
         echo "$tempDir\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
         
     - name: Run Nuitka build
-      run: python build.py  # 确保你的build.py已正确配置Nuitka
+      run: python build.py
       
     - name: Upload artifacts
       uses: actions/upload-artifact@v4.6.2

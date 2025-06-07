@@ -2,9 +2,9 @@ import os
 
 from common.config import VERSION, AUTHOR
 
-app_name = 'MyApp'
+app_name = 'StudentGradeTracker'
 build_command = "nuitka --standalone --mingw64 --enable-plugin=pyside6 "
-build_command += "--windows-disable-console "
+build_command += "--windows-console-mode=disable "
 build_command += "--windows-icon-from-ico=resource/images/logo.png --output-dir=out "
 build_command += f"--windows-company-name={AUTHOR}  --windows-product-name={app_name} "
 build_command += f"--windows-product-version={VERSION} "
