@@ -104,8 +104,8 @@ class PageTwoHandler:
         chart_view.setRenderHint(QPainter.Antialiasing)
 
         layout = self.ui.verticalLayout_2
-        while layout.count() > 2:  # 保留前两个按钮
-            item = layout.takeAt(2)
+        while layout.count() > 1:  # 保留前两个按钮
+            item = layout.takeAt(1)
             widget = item.widget()
             if widget:
                 widget.setParent(None)

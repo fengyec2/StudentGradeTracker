@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QListView, QSizePolicy,
     QVBoxLayout, QWidget)
 
-from qfluentwidgets import PushButton
+from qfluentwidgets import PrimaryPushButton
 
 class Ui_page_two(object):
     def setupUi(self, page_two):
@@ -49,22 +49,19 @@ class Ui_page_two(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.pushButton = PushButton(self.horizontalLayoutWidget)
+        self.pushButton = PrimaryPushButton(self.horizontalLayoutWidget)
         self.pushButton.setObjectName(u"pushButton")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
         self.pushButton.setSizePolicy(sizePolicy1)
+        self.pushButton.setMinimumSize(QSize(0, 35))
+        font = QFont()
+        font.setFamilies([u"Microsoft YaHei"])
+        self.pushButton.setFont(font)
 
         self.verticalLayout_2.addWidget(self.pushButton)
-
-        self.pushButton_2 = PushButton(self.horizontalLayoutWidget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        sizePolicy1.setHeightForWidth(self.pushButton_2.sizePolicy().hasHeightForWidth())
-        self.pushButton_2.setSizePolicy(sizePolicy1)
-
-        self.verticalLayout_2.addWidget(self.pushButton_2)
 
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
@@ -72,12 +69,14 @@ class Ui_page_two(object):
 
         self.retranslateUi(page_two)
 
+        self.pushButton.setDefault(True)
+
+
         QMetaObject.connectSlotsByName(page_two)
     # setupUi
 
     def retranslateUi(self, page_two):
         page_two.setWindowTitle(QCoreApplication.translate("page_two", u"Form", None))
-        self.pushButton.setText(QCoreApplication.translate("page_two", u"\u5237\u65b0\u5217\u8868", None))
-        self.pushButton_2.setText(QCoreApplication.translate("page_two", u"\u8017\u65f6\u64cd\u4f5c\u6f14\u793a", None))
+        self.pushButton.setText(QCoreApplication.translate("page_two", u"\u5237\u65b0", None))
     # retranslateUi
 
