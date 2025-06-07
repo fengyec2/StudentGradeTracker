@@ -43,9 +43,12 @@ class Ui_page_class_grade(object):
         self.horizontalLayout.addWidget(self.label)
 
         self.comboExam = QComboBox(page_class_grade)
-        self.comboExam.addItem("")
-        self.comboExam.addItem("")
         self.comboExam.setObjectName(u"comboExam")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.comboExam.sizePolicy().hasHeightForWidth())
+        self.comboExam.setSizePolicy(sizePolicy)
 
         self.horizontalLayout.addWidget(self.comboExam)
 
@@ -55,9 +58,6 @@ class Ui_page_class_grade(object):
         self.horizontalLayout.addWidget(self.label_2)
 
         self.listClasses = QListWidget(page_class_grade)
-        QListWidgetItem(self.listClasses)
-        QListWidgetItem(self.listClasses)
-        QListWidgetItem(self.listClasses)
         self.listClasses.setObjectName(u"listClasses")
         self.listClasses.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
 
@@ -65,19 +65,25 @@ class Ui_page_class_grade(object):
 
         self.btnQuery = QPushButton(page_class_grade)
         self.btnQuery.setObjectName(u"btnQuery")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.btnQuery.sizePolicy().hasHeightForWidth())
+        self.btnQuery.setSizePolicy(sizePolicy1)
 
         self.horizontalLayout.addWidget(self.btnQuery)
-
-        self.btnExport = QPushButton(page_class_grade)
-        self.btnExport.setObjectName(u"btnExport")
-
-        self.horizontalLayout.addWidget(self.btnExport)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.tabWidget = QTabWidget(page_class_grade)
         self.tabWidget.setObjectName(u"tabWidget")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
+        self.tabWidget.setSizePolicy(sizePolicy2)
+        self.tabWidget.setMinimumSize(QSize(0, 400))
         self.tabTable = QWidget()
         self.tabTable.setObjectName(u"tabTable")
         self.verticalLayout_2 = QVBoxLayout(self.tabTable)
@@ -143,23 +149,8 @@ class Ui_page_class_grade(object):
     def retranslateUi(self, page_class_grade):
         page_class_grade.setWindowTitle("")
         self.label.setText(QCoreApplication.translate("page_class_grade", u"\u9009\u62e9\u8003\u8bd5\uff1a", None))
-        self.comboExam.setItemText(0, QCoreApplication.translate("page_class_grade", u"\u671f\u4e2d\u8003\u8bd5", None))
-        self.comboExam.setItemText(1, QCoreApplication.translate("page_class_grade", u"\u671f\u672b\u8003\u8bd5", None))
-
         self.label_2.setText(QCoreApplication.translate("page_class_grade", u"\u9009\u62e9\u73ed\u7ea7\uff1a", None))
-
-        __sortingEnabled = self.listClasses.isSortingEnabled()
-        self.listClasses.setSortingEnabled(False)
-        ___qlistwidgetitem = self.listClasses.item(0)
-        ___qlistwidgetitem.setText(QCoreApplication.translate("page_class_grade", u"\u73ed\u7ea7A", None));
-        ___qlistwidgetitem1 = self.listClasses.item(1)
-        ___qlistwidgetitem1.setText(QCoreApplication.translate("page_class_grade", u"\u73ed\u7ea7B", None));
-        ___qlistwidgetitem2 = self.listClasses.item(2)
-        ___qlistwidgetitem2.setText(QCoreApplication.translate("page_class_grade", u"\u73ed\u7ea7C", None));
-        self.listClasses.setSortingEnabled(__sortingEnabled)
-
         self.btnQuery.setText(QCoreApplication.translate("page_class_grade", u"\u67e5\u8be2", None))
-        self.btnExport.setText(QCoreApplication.translate("page_class_grade", u"\u5bfc\u51faExcel", None))
         ___qtablewidgetitem = self.tableScores.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("page_class_grade", u"\u73ed\u7ea7", None));
         ___qtablewidgetitem1 = self.tableScores.horizontalHeaderItem(1)
