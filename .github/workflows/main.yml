@@ -25,7 +25,7 @@ jobs:
     - name: Install MinGW64 (winlibs)
       run: |
         # 下载并安装 Nuitka 所需的 MinGW64
-        $url = "https://github.com/brechtsanders/winlibs_mingw/releases/download/14.2.0-19.1.1-12.0.0-msvcrt-r2/winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64msvcrt-12.0.0-r2.zip"
+        $url = "https://github.com/brechtsanders/winlibs_mingw/releases/download/15.1.0posix-12.0.0-ucrt-r1/winlibs-x86_64-posix-seh-gcc-15.1.0-mingw-w64ucrt-12.0.0-r1.zip"
         $tempDir = "$env:TEMP\mingw64"
         New-Item -Path $tempDir -ItemType Directory -Force
         Invoke-WebRequest -Uri $url -OutFile "$tempDir\mingw64.zip"
