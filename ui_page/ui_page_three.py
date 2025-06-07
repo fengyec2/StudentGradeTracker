@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QHeaderView, QListView,
     QSizePolicy, QTableView, QVBoxLayout, QWidget)
 
-from qfluentwidgets import PushButton
+from qfluentwidgets import PrimaryPushButton
 
 class Ui_page_three(object):
     def setupUi(self, page_three):
@@ -49,22 +49,19 @@ class Ui_page_three(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.pushButton = PushButton(self.horizontalLayoutWidget)
+        self.pushButton = PrimaryPushButton(self.horizontalLayoutWidget)
         self.pushButton.setObjectName(u"pushButton")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
         self.pushButton.setSizePolicy(sizePolicy1)
+        self.pushButton.setMinimumSize(QSize(0, 35))
+        font = QFont()
+        font.setFamilies([u"Microsoft YaHei"])
+        self.pushButton.setFont(font)
 
         self.verticalLayout_2.addWidget(self.pushButton)
-
-        self.pushButton_2 = PushButton(self.horizontalLayoutWidget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        sizePolicy1.setHeightForWidth(self.pushButton_2.sizePolicy().hasHeightForWidth())
-        self.pushButton_2.setSizePolicy(sizePolicy1)
-
-        self.verticalLayout_2.addWidget(self.pushButton_2)
 
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
@@ -77,12 +74,14 @@ class Ui_page_three(object):
 
         self.retranslateUi(page_three)
 
+        self.pushButton.setDefault(True)
+
+
         QMetaObject.connectSlotsByName(page_three)
     # setupUi
 
     def retranslateUi(self, page_three):
         page_three.setWindowTitle(QCoreApplication.translate("page_three", u"Form", None))
-        self.pushButton.setText(QCoreApplication.translate("page_three", u"\u5bfc\u5165", None))
-        self.pushButton_2.setText(QCoreApplication.translate("page_three", u"\u8017\u65f6\u64cd\u4f5c\u6f14\u793a", None))
+        self.pushButton.setText(QCoreApplication.translate("page_three", u"\u5237\u65b0", None))
     # retranslateUi
 

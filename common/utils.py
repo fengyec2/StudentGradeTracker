@@ -1,3 +1,6 @@
+import os
+import json
+
 from enum import Enum
 
 from PySide6.QtGui import QDesktopServices
@@ -47,3 +50,37 @@ def set_window_center(window):
     cp = window.screen().availableGeometry().center()
     qr.moveCenter(cp)
     window.move(qr.topLeft())
+
+
+# Utility functions to handle student data and exam metadata
+
+
+def get_all_students():
+    student_dir = "data/students"
+    students = []
+    for filename in os.listdir(student_dir):
+        if filename.endswith(".json"):
+            with open(os.path.join(student_dir, filename), "r", encoding="utf-8") as f:
+                data = json.load(f)
+                students.append({"name": data["student"]})
+    return students
+
+
+def get_student_data(student_name):
+    path = os.path.join("data/students", f"{student_name}.json")
+    if not os.path.exists(path):
+        return None
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def get_exam_display_name(filename):
+    meta_path = "data/exam_meta.json"
+    if not os.path.exists(meta_path):
+        return filename
+    with open(meta_path, "r", encoding="utf-8") as f:
+        meta = json.load(f)
+        for exam in meta.get("exams_order", []):
+            if exam["filename"] == filename:
+                return exam["display_name"]
+    return filename
