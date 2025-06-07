@@ -26,5 +26,4 @@ class PageTwo(QWidget, Ui_page_two):
     def on_import_button_clicked(self):
         """ 手动刷新数据，点击按钮时调用 """
         self.handler.load_student_list(self.student_model)
-        self.handler.load_exam_meta()
         
