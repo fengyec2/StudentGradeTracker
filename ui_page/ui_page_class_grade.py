@@ -17,26 +17,28 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QHBoxLayout,
     QHeaderView, QLabel, QLineEdit, QListWidget,
-    QListWidgetItem, QPushButton, QSizePolicy, QStatusBar,
-    QTabWidget, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+    QListWidgetItem, QPushButton, QSizePolicy, QTabWidget,
+    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_page_class_grade(object):
     def setupUi(self, page_class_grade):
         if not page_class_grade.objectName():
             page_class_grade.setObjectName(u"page_class_grade")
         page_class_grade.resize(800, 600)
-        self.verticalLayout_4 = QVBoxLayout(page_class_grade)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.statusbar = QStatusBar(page_class_grade)
-        self.statusbar.setObjectName(u"statusbar")
-
-        self.verticalLayout_4.addWidget(self.statusbar)
-
-        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout = QVBoxLayout(page_class_grade)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.btnRefresh = QPushButton(page_class_grade)
+        self.btnRefresh.setObjectName(u"btnRefresh")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.btnRefresh.sizePolicy().hasHeightForWidth())
+        self.btnRefresh.setSizePolicy(sizePolicy)
+
+        self.horizontalLayout.addWidget(self.btnRefresh)
+
         self.label = QLabel(page_class_grade)
         self.label.setObjectName(u"label")
 
@@ -44,11 +46,12 @@ class Ui_page_class_grade(object):
 
         self.comboExam = QComboBox(page_class_grade)
         self.comboExam.setObjectName(u"comboExam")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.comboExam.sizePolicy().hasHeightForWidth())
-        self.comboExam.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.comboExam.sizePolicy().hasHeightForWidth())
+        self.comboExam.setSizePolicy(sizePolicy1)
+        self.comboExam.setMinimumSize(QSize(200, 0))
 
         self.horizontalLayout.addWidget(self.comboExam)
 
@@ -65,11 +68,8 @@ class Ui_page_class_grade(object):
 
         self.btnQuery = QPushButton(page_class_grade)
         self.btnQuery.setObjectName(u"btnQuery")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.btnQuery.sizePolicy().hasHeightForWidth())
-        self.btnQuery.setSizePolicy(sizePolicy1)
+        sizePolicy.setHeightForWidth(self.btnQuery.sizePolicy().hasHeightForWidth())
+        self.btnQuery.setSizePolicy(sizePolicy)
 
         self.horizontalLayout.addWidget(self.btnQuery)
 
@@ -83,7 +83,7 @@ class Ui_page_class_grade(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
         self.tabWidget.setSizePolicy(sizePolicy2)
-        self.tabWidget.setMinimumSize(QSize(0, 400))
+        self.tabWidget.setMinimumSize(QSize(0, 450))
         self.tabTable = QWidget()
         self.tabTable.setObjectName(u"tabTable")
         self.verticalLayout_2 = QVBoxLayout(self.tabTable)
@@ -138,9 +138,6 @@ class Ui_page_class_grade(object):
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
 
-        self.verticalLayout_4.addLayout(self.verticalLayout)
-
-
         self.retranslateUi(page_class_grade)
 
         QMetaObject.connectSlotsByName(page_class_grade)
@@ -148,6 +145,7 @@ class Ui_page_class_grade(object):
 
     def retranslateUi(self, page_class_grade):
         page_class_grade.setWindowTitle("")
+        self.btnRefresh.setText(QCoreApplication.translate("page_class_grade", u"\u5237\u65b0", None))
         self.label.setText(QCoreApplication.translate("page_class_grade", u"\u9009\u62e9\u8003\u8bd5\uff1a", None))
         self.label_2.setText(QCoreApplication.translate("page_class_grade", u"\u9009\u62e9\u73ed\u7ea7\uff1a", None))
         self.btnQuery.setText(QCoreApplication.translate("page_class_grade", u"\u67e5\u8be2", None))

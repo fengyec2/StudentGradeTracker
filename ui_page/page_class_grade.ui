@@ -13,149 +13,161 @@
   <property name="windowTitle">
    <string/>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QStatusBar" name="statusbar"/>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>选择考试：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="comboExam">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>选择班级：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="listClasses">
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SelectionMode::MultiSelection</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnQuery">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>查询</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="btnRefresh">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>刷新</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QTabWidget" name="tabWidget">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>选择考试：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboExam">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>0</width>
-         <height>400</height>
+         <width>200</width>
+         <height>0</height>
         </size>
        </property>
-       <widget class="QWidget" name="tabTable">
-        <attribute name="title">
-         <string>表格视图</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QTableWidget" name="tableScores">
-           <property name="rowCount">
-            <number>0</number>
-           </property>
-           <property name="columnCount">
-            <number>5</number>
-           </property>
-           <column>
-            <property name="text">
-             <string>班级</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>语文</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>数学</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>英语</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>平均分</string>
-            </property>
-           </column>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="tabChart">
-        <attribute name="title">
-         <string>图表视图</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QWidget" name="widgetChart" native="true">
-           <property name="styleSheet">
-            <string notr="true">background-color: #f0f0f0;</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>选择班级：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="listClasses">
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SelectionMode::MultiSelection</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnQuery">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>查询</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>450</height>
+      </size>
+     </property>
+     <widget class="QWidget" name="tabTable">
+      <attribute name="title">
+       <string>表格视图</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="labelStats">
-         <property name="text">
-          <string>年级平均分：--</string>
+        <widget class="QTableWidget" name="tableScores">
+         <property name="rowCount">
+          <number>0</number>
          </property>
+         <property name="columnCount">
+          <number>5</number>
+         </property>
+         <column>
+          <property name="text">
+           <string>班级</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>语文</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>数学</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>英语</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>平均分</string>
+          </property>
+         </column>
         </widget>
        </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabChart">
+      <attribute name="title">
+       <string>图表视图</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLineEdit" name="editNotes">
-         <property name="placeholderText">
-          <string>输入备注...</string>
+        <widget class="QWidget" name="widgetChart" native="true">
+         <property name="styleSheet">
+          <string notr="true">background-color: #f0f0f0;</string>
          </property>
         </widget>
        </item>
       </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="labelStats">
+       <property name="text">
+        <string>年级平均分：--</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="editNotes">
+       <property name="placeholderText">
+        <string>输入备注...</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

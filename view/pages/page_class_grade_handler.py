@@ -22,6 +22,10 @@ class PageClassGradeHandler:
         self.init_ui()
 
     def init_ui(self):
+        self.refresh()
+    
+    def refresh(self):
+        """刷新考试下拉框和班级列表"""
         self.load_exam_list()
         self.load_class_list()
 

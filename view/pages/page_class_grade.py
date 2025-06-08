@@ -10,3 +10,4 @@ class PageClassGrade(QWidget, Ui_page_class_grade):
 
         self.handler = PageClassGradeHandler(self)  # init_ui 已在此处构造函数中完成
         self.btnQuery.clicked.connect(self.handler.on_query_clicked)
+        self.btnRefresh.clicked.connect(self.handler.refresh)  # ✅ 添加刷新按钮绑定
