@@ -10,147 +10,221 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="btnRefresh">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>刷新</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>选择考试：</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboExam">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>200</width>
-         <height>0</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>选择班级：</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QListWidget" name="listClasses">
-       <property name="selectionMode">
-        <enum>QAbstractItemView::SelectionMode::MultiSelection</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnQuery">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>查询</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QFrame" name="frameQueryCard">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="minimumSize">
+     <property name="maximumSize">
       <size>
-       <width>0</width>
-       <height>450</height>
+       <width>16777215</width>
+       <height>100</height>
       </size>
      </property>
-     <widget class="QWidget" name="tabTable">
-      <attribute name="title">
-       <string>表格视图</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QTableWidget" name="tableScores">
-         <property name="rowCount">
-          <number>0</number>
-         </property>
-         <property name="columnCount">
-          <number>5</number>
-         </property>
-         <column>
-          <property name="text">
-           <string>班级</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>语文</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>数学</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>英语</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>平均分</string>
-          </property>
-         </column>
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="btnRefresh">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>刷新</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>选择考试：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboExam">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>选择班级：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QListWidget" name="listClasses">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+           QListView {
+             border: 1px solid #dcdfe6;
+             border-radius: 4px;
+             padding: 4px;
+             background-color: #ffffff;
+           }
+           QListView::item {
+             padding: 8px 12px;
+             border-bottom: 1px solid #ebeef5;
+           }
+           QListView::item:hover {
+             background-color: #f5f7fa;
+           }
+           QListView::item:selected {
+             background-color: #ecf5ff;
+             color: #409eff;
+             border-left: 3px solid #409eff;
+           }
+         </string>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SelectionMode::MultiSelection</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnQuery">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>查询</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frameResultCard">
+     <property name="styleSheet">
+      <string notr="true">QFrame {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>400</height>
+         </size>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tabTable_2">
+         <attribute name="title">
+          <string>表格视图</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_table_2">
+          <item>
+           <widget class="QTableWidget" name="tableScores">
+            <property name="rowCount">
+             <number>0</number>
+            </property>
+            <property name="columnCount">
+             <number>5</number>
+            </property>
+            <column>
+             <property name="text">
+              <string>班级</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>语文</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>数学</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>英语</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>平均分</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
         </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabChart">
-      <attribute name="title">
-       <string>图表视图</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QWidget" name="widgetChart" native="true">
-         <property name="styleSheet">
-          <string notr="true">background-color: #f0f0f0;</string>
-         </property>
+        <widget class="QWidget" name="tabChart_2">
+         <attribute name="title">
+          <string>图表视图</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QWidget" name="widgetChart" native="true">
+            <property name="styleSheet">
+             <string notr="true">background-color: #f0f0f0;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
-       </item>
-      </layout>
-     </widget>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
