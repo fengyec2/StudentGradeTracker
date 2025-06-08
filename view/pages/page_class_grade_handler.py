@@ -50,7 +50,10 @@ class PageClassGradeHandler:
             self.ui.comboExam.addItem(exam["display_name"], userData=exam["filename"])
 
     def load_class_list(self):
-        """动态加载学生班级列表"""
+        """动态加载学生班级列表，如果目录不存在则创建"""
+        if not os.path.exists(STUDENTS_DIR):
+            os.makedirs(STUDENTS_DIR, exist_ok=True)
+
         class_set = set()
         for file in os.listdir(STUDENTS_DIR):
             if file.endswith(".json"):
@@ -61,7 +64,7 @@ class PageClassGradeHandler:
                         if cls:
                             class_set.add(cls)
                 except Exception:
-                    continue
+                    continue  # 忽略无法解析的学生文件
 
         self.ui.listClasses.clear()
         for cls in sorted(class_set, key=lambda x: int(x) if x.isdigit() else x):
@@ -69,6 +72,7 @@ class PageClassGradeHandler:
             item.setData(0x0100, cls)
             item.setSelected(True)
             self.ui.listClasses.addItem(item)
+
 
     def on_query_clicked(self):
         selected_exam_index = self.ui.comboExam.currentIndex()
