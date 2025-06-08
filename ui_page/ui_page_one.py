@@ -104,6 +104,26 @@ class Ui_page_one(object):
 
         self.horizontalLayout.addWidget(self.leftPanel)
 
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.upperRightPanel = QFrame(page_one)
+        self.upperRightPanel.setObjectName(u"upperRightPanel")
+        self.upperRightPanel.setStyleSheet(u"\n"
+"        background-color: white;\n"
+"        border-radius: 8px;\n"
+"        padding: 10px;\n"
+"      ")
+        self.rightLayout_2 = QVBoxLayout(self.upperRightPanel)
+        self.rightLayout_2.setObjectName(u"rightLayout_2")
+        self.labelPreview_2 = QLabel(self.upperRightPanel)
+        self.labelPreview_2.setObjectName(u"labelPreview_2")
+        self.labelPreview_2.setStyleSheet(u"font-weight: bold; font-size: 14px;")
+
+        self.rightLayout_2.addWidget(self.labelPreview_2)
+
+
+        self.verticalLayout.addWidget(self.upperRightPanel)
+
         self.rightPanel = QFrame(page_one)
         self.rightPanel.setObjectName(u"rightPanel")
         self.rightPanel.setStyleSheet(u"\n"
@@ -131,6 +151,8 @@ class Ui_page_one(object):
 "             background-color: #f7f7f7;\n"
 "             padding: 5px;\n"
 "             border: none;\n"
+"             min-height: 40px;  /* \u663e\u5f0f\u8bbe\u7f6e\u9ad8\u5ea6 */\n"
+"             min-width: 40px;  /* \u663e\u5f0f\u8bbe\u7f6e\u5bbd\u5ea6 */\n"
 "           }\n"
 "         ")
         self.tableView.setAlternatingRowColors(True)
@@ -138,7 +160,10 @@ class Ui_page_one(object):
         self.rightLayout.addWidget(self.tableView)
 
 
-        self.horizontalLayout.addWidget(self.rightPanel)
+        self.verticalLayout.addWidget(self.rightPanel)
+
+
+        self.horizontalLayout.addLayout(self.verticalLayout)
 
 
         self.retranslateUi(page_one)
@@ -151,6 +176,7 @@ class Ui_page_one(object):
         self.labelExamList.setText(QCoreApplication.translate("page_one", u"\u5df2\u5bfc\u5165\u7684\u8003\u8bd5", None))
         self.pushButton.setText(QCoreApplication.translate("page_one", u"\u5bfc\u5165\u65b0\u8003\u8bd5", None))
         self.btnDelete.setText(QCoreApplication.translate("page_one", u"\u5220\u9664", None))
+        self.labelPreview_2.setText(QCoreApplication.translate("page_one", u"\u8003\u8bd5\u4fe1\u606f", None))
         self.labelPreview.setText(QCoreApplication.translate("page_one", u"\u6570\u636e\u9884\u89c8 (\u51710\u884c)", None))
     # retranslateUi
 

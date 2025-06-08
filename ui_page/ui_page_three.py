@@ -104,6 +104,20 @@ class Ui_page_three(object):
         self.chartLayout_2.setObjectName(u"chartLayout_2")
         self.tableView = QTableView(self.rightFrame)
         self.tableView.setObjectName(u"tableView")
+        self.tableView.setStyleSheet(u"\n"
+"           QTableView {\n"
+"             border: 1px solid #ddd;\n"
+"             gridline-color: #f0f0f0;\n"
+"             border-radius: 4px;\n"
+"           }\n"
+"           QHeaderView::section {\n"
+"             background-color: #f7f7f7;\n"
+"             padding: 5px;\n"
+"             border: none;\n"
+"             min-height: 80px;\n"
+"             min-width: 40px;\n"
+"           }\n"
+"         ")
 
         self.chartLayout_2.addWidget(self.tableView)
 

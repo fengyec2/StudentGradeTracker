@@ -109,29 +109,54 @@
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="rightPanel">
-     <property name="styleSheet">
-      <string notr="true">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QFrame" name="upperRightPanel">
+       <property name="styleSheet">
+        <string notr="true">
         background-color: white;
         border-radius: 8px;
         padding: 10px;
       </string>
-     </property>
-     <layout class="QVBoxLayout" name="rightLayout">
-      <item>
-       <widget class="QLabel" name="labelPreview">
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold; font-size: 14px;</string>
-        </property>
-        <property name="text">
-         <string>数据预览 (共0行)</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTableView" name="tableView">
-        <property name="styleSheet">
-         <string notr="true">
+       </property>
+       <layout class="QVBoxLayout" name="rightLayout_2">
+        <item>
+         <widget class="QLabel" name="labelPreview_2">
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 14px;</string>
+          </property>
+          <property name="text">
+           <string>考试信息</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFrame" name="rightPanel">
+       <property name="styleSheet">
+        <string notr="true">
+        background-color: white;
+        border-radius: 8px;
+        padding: 10px;
+      </string>
+       </property>
+       <layout class="QVBoxLayout" name="rightLayout">
+        <item>
+         <widget class="QLabel" name="labelPreview">
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 14px;</string>
+          </property>
+          <property name="text">
+           <string>数据预览 (共0行)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableView" name="tableView">
+          <property name="styleSheet">
+           <string notr="true">
            QTableView {
              border: 1px solid #ddd;
              border-radius: 4px;
@@ -141,16 +166,20 @@
              background-color: #f7f7f7;
              padding: 5px;
              border: none;
+             min-height: 40px;  /* 显式设置高度 */
+             min-width: 40px;  /* 显式设置宽度 */
            }
          </string>
-        </property>
-        <property name="alternatingRowColors">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
