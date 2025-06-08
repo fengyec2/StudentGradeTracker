@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QHBoxLayout, QListView, QSizePolicy,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
+    QListView, QSizePolicy, QVBoxLayout, QWidget)
 
 from qfluentwidgets import PrimaryPushButton
 
@@ -27,18 +27,54 @@ class Ui_page_two(object):
         page_two.resize(762, 582)
         self.horizontalLayout = QHBoxLayout(page_two)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.listView = QListView(page_two)
-        self.listView.setObjectName(u"listView")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.leftFrame = QFrame(page_two)
+        self.leftFrame.setObjectName(u"leftFrame")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.listView.sizePolicy().hasHeightForWidth())
-        self.listView.setSizePolicy(sizePolicy)
-        self.listView.setMaximumSize(QSize(16777215, 16777215))
+        sizePolicy.setHeightForWidth(self.leftFrame.sizePolicy().hasHeightForWidth())
+        self.leftFrame.setSizePolicy(sizePolicy)
+        self.leftFrame.setMaximumSize(QSize(200, 16777215))
+        self.leftFrame.setStyleSheet(u"\n"
+"        background-color: white;\n"
+"        border-radius: 8px;\n"
+"        padding: 12px;\n"
+"        border: 1px solid #e4e7ed;\n"
+"      ")
+        self.leftContentLayout = QVBoxLayout(self.leftFrame)
+        self.leftContentLayout.setObjectName(u"leftContentLayout")
+        self.labelTitle = QLabel(self.leftFrame)
+        self.labelTitle.setObjectName(u"labelTitle")
+        self.labelTitle.setStyleSheet(u"font-weight: bold; font-size: 14px;")
 
-        self.horizontalLayout.addWidget(self.listView)
+        self.leftContentLayout.addWidget(self.labelTitle)
 
-        self.pushButton = PrimaryPushButton(page_two)
+        self.listView = QListView(self.leftFrame)
+        self.listView.setObjectName(u"listView")
+        self.listView.setStyleSheet(u"\n"
+"           QListView {\n"
+"             border: 1px solid #dcdfe6;\n"
+"             border-radius: 4px;\n"
+"             padding: 4px;\n"
+"             background-color: #ffffff;\n"
+"           }\n"
+"           QListView::item {\n"
+"             padding: 8px 12px;\n"
+"             border-bottom: 1px solid #ebeef5;\n"
+"           }\n"
+"           QListView::item:hover {\n"
+"             background-color: #f5f7fa;\n"
+"           }\n"
+"           QListView::item:selected {\n"
+"             background-color: #ecf5ff;\n"
+"             color: #409eff;\n"
+"             border-left: 3px solid #409eff;\n"
+"           }\n"
+"         ")
+
+        self.leftContentLayout.addWidget(self.listView)
+
+        self.pushButton = PrimaryPushButton(self.leftFrame)
         self.pushButton.setObjectName(u"pushButton")
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
@@ -50,13 +86,26 @@ class Ui_page_two(object):
         font.setFamilies([u"Microsoft YaHei"])
         self.pushButton.setFont(font)
 
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.leftContentLayout.addWidget(self.pushButton)
 
-        self.chartWidget = QWidget(page_two)
+
+        self.horizontalLayout.addWidget(self.leftFrame)
+
+        self.chartWidget = QFrame(page_two)
         self.chartWidget.setObjectName(u"chartWidget")
-        self.chartLayout = QVBoxLayout(self.chartWidget)
+        self.chartWidget.setStyleSheet(u"\n"
+"        background-color: white;\n"
+"        border-radius: 8px;\n"
+"        padding: 16px;\n"
+"        border: 1px solid #e4e7ed;\n"
+"      ")
+        self.chartLayout_2 = QVBoxLayout(self.chartWidget)
+        self.chartLayout_2.setObjectName(u"chartLayout_2")
+        self.chartLayout = QVBoxLayout()
         self.chartLayout.setObjectName(u"chartLayout")
-        self.chartLayout.setContentsMargins(0, 0, 0, 0)
+
+        self.chartLayout_2.addLayout(self.chartLayout)
+
 
         self.horizontalLayout.addWidget(self.chartWidget)
 
@@ -71,6 +120,7 @@ class Ui_page_two(object):
 
     def retranslateUi(self, page_two):
         page_two.setWindowTitle(QCoreApplication.translate("page_two", u"Form", None))
+        self.labelTitle.setText(QCoreApplication.translate("page_two", u"\u9009\u62e9\u5b66\u751f", None))
         self.pushButton.setText(QCoreApplication.translate("page_two", u"\u5237\u65b0", None))
     # retranslateUi
 
