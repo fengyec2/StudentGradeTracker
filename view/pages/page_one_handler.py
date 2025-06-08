@@ -247,12 +247,17 @@ class PageOneHandler(QObject):
                 break
 
         if changed:
+            # ✅ 对 exams_order 按 real_date 升序排序
+            meta["exams_order"] = sorted(meta["exams_order"], key=lambda e: e["real_date"])
+    
             with open(META_PATH, "w", encoding="utf-8") as f:
                 json.dump(meta, f, ensure_ascii=False, indent=2)
+
             self.load_exam_list()
             if hasattr(self, "_selected_index"):
                 self._parent.listView.setCurrentIndex(self._exam_model.index(self._selected_index))
                 self.on_exam_selected(self._exam_model.index(self._selected_index))
+
     
     def delete_exam(self):
         if not hasattr(self, "_selected_index"):

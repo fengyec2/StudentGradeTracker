@@ -1,6 +1,3 @@
-import os
-import json
-# from PySide6.QtWidgets import QMessageBox, QWidget
 from PySide6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis, QCategoryAxis
 from PySide6.QtGui import QPainter, QStandardItem
 from PySide6.QtCore import QPointF, Qt
@@ -8,21 +5,10 @@ from common.my_logger import my_logger as logger
 from common.utils import show_dialog, get_all_students, get_student_data, get_exam_display_name, load_exam_meta
 
 DATA_DIR = "data"
-# EXAM_META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
-
 
 class PageTwoHandler:
     def __init__(self, ui):
         self.ui = ui
-
-    # def load_exam_meta(self):
-    #     try:
-    #         with open(EXAM_META_PATH, "r", encoding="utf-8") as f:
-    #             return json.load(f)
-    #     except Exception as e:
-    #         logger.exception(e)
-    #         show_dialog(parent=None, content=f'无法读取考试元数据:{e}')
-    #         return {"exams_order": []}
 
     def load_student_list(self, model):
         model.clear()

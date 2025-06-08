@@ -1,9 +1,9 @@
 import os
 import json
 from PySide6.QtGui import QStandardItemModel, QStandardItem
-# from PySide6.QtWidgets import QTableWidgetItem, QTableWidget
 from PySide6.QtCore import Qt
-from common.utils import get_all_students, get_student_data, get_exam_display_name
+
+from common.utils import get_all_students, get_student_data, get_exam_display_name, load_exam_meta
 
 class PageThreeHandler:
     def __init__(self, parent):
@@ -24,6 +24,13 @@ class PageThreeHandler:
             return
 
         exams = student_data.get("exams", [])
+
+        # ✅ 加载考试顺序并排序
+        exam_order = [e["filename"] for e in load_exam_meta().get("exams_order", [])]
+        exams = sorted(
+            exams,
+            key=lambda x: exam_order.index(x["filename"]) if x["filename"] in exam_order else float('inf')
+        )
 
         # 获取所有科目集合（自动扩展）
         subject_set = set()
@@ -46,7 +53,6 @@ class PageThreeHandler:
             table_data.append(row)
 
         self.display_table(headers, table_data)
-
 
     def display_table(self, headers, data):
         """ 在 tableView 上展示表格（使用 QStandardItemModel） """
