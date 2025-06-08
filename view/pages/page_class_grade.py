@@ -8,6 +8,5 @@ class PageClassGrade(QWidget, Ui_page_class_grade):
         super().__init__(parent)
         self.setupUi(self)
 
-        self.handler = PageClassGradeHandler(self)
-        self.handler.init_ui()
+        self.handler = PageClassGradeHandler(self)  # init_ui 已在此处构造函数中完成
         self.btnQuery.clicked.connect(self.handler.on_query_clicked)

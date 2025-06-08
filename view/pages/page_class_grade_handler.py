@@ -5,39 +5,64 @@ from collections import defaultdict
 from PySide6.QtWidgets import QTableWidgetItem, QListWidgetItem, QVBoxLayout
 from PySide6.QtCharts import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis
 from PySide6.QtGui import QPainter
+from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex
 
-from common.utils import show_dialog, get_student_data
+from common.utils import show_dialog
+from view.pages.page_one_handler import ExamListModel  # ✅ 复用模型类
+
+DATA_DIR = "data"
+STUDENTS_DIR = os.path.join(DATA_DIR, "students")
+META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
 
 
 class PageClassGradeHandler:
     def __init__(self, ui):
         self.ui = ui
+        self._exam_model = None
+        self.init_ui()
 
     def init_ui(self):
-        # 填充考试下拉框
-        meta_path = "data/exam_meta.json"
-        if os.path.exists(meta_path):
-            with open(meta_path, "r", encoding="utf-8") as f:
-                meta = json.load(f)
-                for exam in meta.get("exams_order", []):
-                    display = exam.get("display_name")
-                    filename = exam.get("filename")
-                    self.ui.comboExam.addItem(display, userData=filename)
+        self.load_exam_list()
+        self.load_class_list()
 
-        # 动态收集班级列表
+    def load_exam_list(self):
+        """采用统一模型方式加载考试列表"""
+        if not os.path.exists(META_PATH):
+            self._exam_model = ExamListModel([])
+        else:
+            try:
+                with open(META_PATH, "r", encoding="utf-8") as f:
+                    meta = json.load(f)
+                    exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"])
+                    self._exam_model = ExamListModel(exams)
+            except Exception as e:
+                show_dialog(self.ui, f"加载考试元数据失败：{e}")
+                self._exam_model = ExamListModel([])
+
+        # 手动绑定 QComboBox（QComboBox 不支持 setModel 默认展示）
+        self.ui.comboExam.clear()
+        for i in range(self._exam_model.rowCount()):
+            exam = self._exam_model.get_exam(i)
+            self.ui.comboExam.addItem(exam["display_name"], userData=exam["filename"])
+
+    def load_class_list(self):
+        """动态加载学生班级列表"""
         class_set = set()
-        student_dir = "data/students"
-        for file in os.listdir(student_dir):
+        for file in os.listdir(STUDENTS_DIR):
             if file.endswith(".json"):
-                path = os.path.join(student_dir, file)
-                with open(path, "r", encoding="utf-8") as f:
-                    student = json.load(f)
-                    class_set.add(student.get("class"))
+                try:
+                    with open(os.path.join(STUDENTS_DIR, file), "r", encoding="utf-8") as f:
+                        student = json.load(f)
+                        cls = student.get("class", "").strip()
+                        if cls:
+                            class_set.add(cls)
+                except Exception:
+                    continue
 
         self.ui.listClasses.clear()
         for cls in sorted(class_set, key=lambda x: int(x) if x.isdigit() else x):
             item = QListWidgetItem(f"{cls}班")
-            item.setData(0x0100, cls)  # Qt.UserRole
+            item.setData(0x0100, cls)
             item.setSelected(True)
             self.ui.listClasses.addItem(item)
 
@@ -48,29 +73,29 @@ class PageClassGradeHandler:
             return
 
         filename = self.ui.comboExam.currentData()
-
         selected_classes = [item.data(0x0100) for item in self.ui.listClasses.selectedItems()]
         if not selected_classes:
             show_dialog(self.ui, "请选择班级")
             return
 
-        student_dir = "data/students"
         results = defaultdict(lambda: defaultdict(list))  # class -> subject -> [score]
-
-        for file in os.listdir(student_dir):
+        for file in os.listdir(STUDENTS_DIR):
             if file.endswith(".json"):
-                path = os.path.join(student_dir, file)
-                with open(path, "r", encoding="utf-8") as f:
-                    student = json.load(f)
-                    student_class = student.get("class")
-                    if student_class not in selected_classes:
-                        continue
-                    for exam in student.get("exams", []):
-                        if exam.get("filename") == filename:
-                            for subj in exam.get("subjects", []):
-                                subject = subj.get("subject")
-                                score = subj.get("score", 0)
-                                results[student_class][subject].append(score)
+                path = os.path.join(STUDENTS_DIR, file)
+                try:
+                    with open(path, "r", encoding="utf-8") as f:
+                        student = json.load(f)
+                        student_class = student.get("class")
+                        if student_class not in selected_classes:
+                            continue
+                        for exam in student.get("exams", []):
+                            if exam.get("filename") == filename:
+                                for subj in exam.get("subjects", []):
+                                    subject = subj.get("subject")
+                                    score = subj.get("score", 0)
+                                    results[student_class][subject].append(score)
+                except Exception:
+                    continue
 
         # 计算平均分
         table_data = []
@@ -102,7 +127,6 @@ class PageClassGradeHandler:
         self.ui.tableScores.setColumnCount(len(headers))
         self.ui.tableScores.setHorizontalHeaderLabels(headers)
         self.ui.tableScores.setRowCount(len(data))
-
         for row_idx, row in enumerate(data):
             for col_idx, key in enumerate(headers):
                 val = row.get(key, "")
@@ -110,7 +134,6 @@ class PageClassGradeHandler:
                 self.ui.tableScores.setItem(row_idx, col_idx, item)
 
     def populate_chart(self, data, subjects):
-        # 清空旧图表
         layout = self.ui.widgetChart.layout()
         if layout:
             while layout.count():
