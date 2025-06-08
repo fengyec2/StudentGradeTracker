@@ -166,3 +166,4 @@ view/ui_main_window.py
 data/exams/*
 data/students/*
 data/*.json
+out/
