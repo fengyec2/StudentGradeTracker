@@ -19,7 +19,7 @@
 
 |  原始文件  |  成绩曲线  |  个人成绩  |  班级成绩  |
 |-----------|-----------|------------|------------|
-| ![原始文件](screen_shot\raw_data.png "原始文件") | ![成绩曲线](screen_shot\trend_chart.png "成绩曲线") | ![个人成绩](screen_shot\score_table.png "个人成绩") | ![班级成绩](screen_shot\class_compare.png "M班级成绩") |
+| ![原始文件](screen_shot/raw_data.png "原始文件") | ![成绩曲线](screen_shot/trend_chart.png "成绩曲线") | ![个人成绩](screen_shot/score_table.png "个人成绩") | ![班级成绩](screen_shot/class_compare.png "M班级成绩") |
 
 ## 🚀 快速开始
 
