@@ -1,0 +1,36 @@
+name: Build on Multi-platforms
+on: [push, pull_request]  # 触发条件
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]  # 测试 Linux 和 macOS
+        python-version: ["3.10"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Build Linux (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: python build_linux.py
+
+      - name: Build macOS
+        if: matrix.os == 'macos-latest'
+        run: python build_macos.py
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-build
+          path: out/
