@@ -78,6 +78,12 @@ class Ui_page_one(object):
         self.buttonLayout.setObjectName(u"buttonLayout")
         self.pushButton = PrimaryPushButton(self.leftPanel)
         self.pushButton.setObjectName(u"pushButton")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+        self.pushButton.setSizePolicy(sizePolicy1)
+        self.pushButton.setMinimumSize(QSize(0, 38))
         icon = QIcon()
         icon.addFile(u":/icons/import.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.pushButton.setIcon(icon)
@@ -86,6 +92,9 @@ class Ui_page_one(object):
 
         self.btnDelete = QPushButton(self.leftPanel)
         self.btnDelete.setObjectName(u"btnDelete")
+        sizePolicy1.setHeightForWidth(self.btnDelete.sizePolicy().hasHeightForWidth())
+        self.btnDelete.setSizePolicy(sizePolicy1)
+        self.btnDelete.setMinimumSize(QSize(0, 38))
         self.btnDelete.setStyleSheet(u"\n"
 "             QPushButton {\n"
 "               color: #ff4d4f;\n"
@@ -120,6 +129,36 @@ class Ui_page_one(object):
         self.labelPreview_2.setStyleSheet(u"font-weight: bold; font-size: 14px;")
 
         self.rightLayout_2.addWidget(self.labelPreview_2)
+
+        self.examNameLayout = QHBoxLayout()
+        self.examNameLayout.setObjectName(u"examNameLayout")
+        self.labelExamName = QLabel(self.upperRightPanel)
+        self.labelExamName.setObjectName(u"labelExamName")
+
+        self.examNameLayout.addWidget(self.labelExamName)
+
+        self.btnEditExamName = QPushButton(self.upperRightPanel)
+        self.btnEditExamName.setObjectName(u"btnEditExamName")
+
+        self.examNameLayout.addWidget(self.btnEditExamName)
+
+
+        self.rightLayout_2.addLayout(self.examNameLayout)
+
+        self.examDateLayout = QHBoxLayout()
+        self.examDateLayout.setObjectName(u"examDateLayout")
+        self.labelExamDate = QLabel(self.upperRightPanel)
+        self.labelExamDate.setObjectName(u"labelExamDate")
+
+        self.examDateLayout.addWidget(self.labelExamDate)
+
+        self.btnEditExamDate = QPushButton(self.upperRightPanel)
+        self.btnEditExamDate.setObjectName(u"btnEditExamDate")
+
+        self.examDateLayout.addWidget(self.btnEditExamDate)
+
+
+        self.rightLayout_2.addLayout(self.examDateLayout)
 
 
         self.verticalLayout.addWidget(self.upperRightPanel)
@@ -177,6 +216,10 @@ class Ui_page_one(object):
         self.pushButton.setText(QCoreApplication.translate("page_one", u"\u5bfc\u5165\u65b0\u8003\u8bd5", None))
         self.btnDelete.setText(QCoreApplication.translate("page_one", u"\u5220\u9664", None))
         self.labelPreview_2.setText(QCoreApplication.translate("page_one", u"\u8003\u8bd5\u4fe1\u606f", None))
+        self.labelExamName.setText(QCoreApplication.translate("page_one", u"\u8003\u8bd5\u540d\u79f0\uff1a\u671f\u4e2d\u8003\u8bd5", None))
+        self.btnEditExamName.setText(QCoreApplication.translate("page_one", u"\u4fee\u6539", None))
+        self.labelExamDate.setText(QCoreApplication.translate("page_one", u"\u8003\u8bd5\u65e5\u671f\uff1a2024-10-10", None))
+        self.btnEditExamDate.setText(QCoreApplication.translate("page_one", u"\u4fee\u6539", None))
         self.labelPreview.setText(QCoreApplication.translate("page_one", u"\u6570\u636e\u9884\u89c8 (\u51710\u884c)", None))
     # retranslateUi
 

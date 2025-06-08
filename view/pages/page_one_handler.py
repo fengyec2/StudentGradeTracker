@@ -5,12 +5,14 @@ import pandas as pd
 from datetime import datetime
 
 from PySide6.QtCore import QObject, QAbstractListModel, Qt, QModelIndex
-from PySide6.QtWidgets import QFileDialog, QDialog, QVBoxLayout, QLabel, QLineEdit, QDateEdit, QPushButton, QHBoxLayout
+from PySide6.QtWidgets import (
+    QFileDialog, QDialog, QVBoxLayout, QLabel,
+    QLineEdit, QDateEdit, QPushButton, QHBoxLayout, QInputDialog
+)
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 
 from common.utils import show_dialog
 from workers.TaskManager import task_manager
-
 
 DATA_DIR = "data"
 EXAMS_DIR = os.path.join(DATA_DIR, "exams")
@@ -25,7 +27,7 @@ class ExamListModel(QAbstractListModel):
 
     def data(self, index: QModelIndex, role):
         if role == Qt.DisplayRole:
-            return self.exams[index.row()]["display_name"]
+            return self.exams[index.row()]['display_name']
 
     def rowCount(self, parent=QModelIndex()):
         return len(self.exams)
@@ -34,15 +36,15 @@ class ExamListModel(QAbstractListModel):
         return self.exams[row] if 0 <= row < len(self.exams) else None
 
 
-class ImportDialog(QDialog):
-    def __init__(self, preview_info):
+class ExamEditDialog(QDialog):
+    def __init__(self, display_name='', real_date=None):
         super().__init__()
-        self.setWindowTitle("导入考试信息")
+        self.setWindowTitle("编辑考试信息")
 
-        self.name_input = QLineEdit()
+        self.name_input = QLineEdit(display_name)
         self.date_input = QDateEdit()
         self.date_input.setCalendarPopup(True)
-        self.date_input.setDate(datetime.now())
+        self.date_input.setDate(real_date or datetime.now())
 
         layout = QVBoxLayout()
         layout.addWidget(QLabel("考试别名："))
@@ -50,16 +52,13 @@ class ImportDialog(QDialog):
         layout.addWidget(QLabel("考试日期："))
         layout.addWidget(self.date_input)
 
-        layout.addWidget(QLabel(f"科目数：{preview_info['subjects']}"))
-        layout.addWidget(QLabel(f"学生数：{preview_info['students']}"))
-
         buttons = QHBoxLayout()
-        self.ok_btn = QPushButton("确认")
-        self.cancel_btn = QPushButton("取消")
-        self.ok_btn.clicked.connect(self.accept)
-        self.cancel_btn.clicked.connect(self.reject)
-        buttons.addWidget(self.ok_btn)
-        buttons.addWidget(self.cancel_btn)
+        ok_btn = QPushButton("确认")
+        cancel_btn = QPushButton("取消")
+        ok_btn.clicked.connect(self.accept)
+        cancel_btn.clicked.connect(self.reject)
+        buttons.addWidget(ok_btn)
+        buttons.addWidget(cancel_btn)
 
         layout.addLayout(buttons)
         self.setLayout(layout)
@@ -77,6 +76,8 @@ class PageOneHandler(QObject):
         self.load_exam_list()
         self._parent.pushButton.setText("导入考试")
         self._parent.pushButton.clicked.connect(self.import_exam)
+        self._parent.btnEditExamName.clicked.connect(self.edit_exam_name)
+        self._parent.btnEditExamDate.clicked.connect(self.edit_exam_date)
 
     def load_exam_list(self):
         if not os.path.exists(META_PATH):
@@ -109,7 +110,7 @@ class PageOneHandler(QObject):
             "students": df.shape[0]
         }
 
-        dialog = ImportDialog(preview_info)
+        dialog = ExamEditDialog()
         if dialog.exec() != QDialog.Accepted:
             return
 
@@ -136,7 +137,6 @@ class PageOneHandler(QObject):
             else:
                 student_data = {"student": name, "class": student_class, "exams": []}
 
-            # 补充 class 字段（若缺失或为空）
             if "class" not in student_data or not student_data["class"]:
                 student_data["class"] = student_class
 
@@ -168,9 +168,14 @@ class PageOneHandler(QObject):
         self.load_exam_list()
 
     def on_exam_selected(self, index):
+        self._selected_index = index.row()
         exam = self._exam_model.get_exam(index.row())
         if not exam:
             return
+
+        self._parent.labelExamName.setText(exam.get("display_name", ""))
+        self._parent.labelExamDate.setText(exam.get("real_date", ""))
+
         filepath = os.path.join(EXAMS_DIR, exam["filename"])
         try:
             df = pd.read_excel(filepath)
@@ -186,3 +191,59 @@ class PageOneHandler(QObject):
             items = [QStandardItem(str(cell)) for cell in row]
             model.appendRow(items)
         self._parent.tableView.setModel(model)
+
+    def edit_exam_name(self):
+        if not hasattr(self, "_selected_index"):
+            show_dialog(self._parent, "请先选择一个考试")
+            return
+
+        exam = self._exam_model.get_exam(self._selected_index)
+        if not exam:
+            return
+
+        new_name, ok = QInputDialog.getText(self._parent, "修改考试名称", "请输入新的考试名称：", text=exam["display_name"])
+        if not ok or not new_name.strip():
+            return
+
+        self.update_exam_meta(exam["filename"], new_display_name=new_name.strip())
+
+    def edit_exam_date(self):
+        if not hasattr(self, "_selected_index"):
+            show_dialog(self._parent, "请先选择一个考试")
+            return
+
+        exam = self._exam_model.get_exam(self._selected_index)
+        if not exam:
+            return
+
+        dialog = ExamEditDialog(display_name=exam["display_name"], real_date=datetime.strptime(exam["real_date"], "%Y-%m-%d"))
+        if dialog.exec() == QDialog.Accepted:
+            _, new_date = dialog.get_data()
+            self.update_exam_meta(exam["filename"], new_real_date=new_date.strftime("%Y-%m-%d"))
+
+    def update_exam_meta(self, filename, new_display_name=None, new_real_date=None):
+        if not os.path.exists(META_PATH):
+            show_dialog(self._parent, "考试元数据文件不存在")
+            return
+
+        with open(META_PATH, "r", encoding="utf-8") as f:
+            meta = json.load(f)
+
+        changed = False
+        for exam in meta.get("exams_order", []):
+            if exam["filename"] == filename:
+                if new_display_name:
+                    exam["display_name"] = new_display_name
+                    changed = True
+                if new_real_date:
+                    exam["real_date"] = new_real_date
+                    changed = True
+                break
+
+        if changed:
+            with open(META_PATH, "w", encoding="utf-8") as f:
+                json.dump(meta, f, ensure_ascii=False, indent=2)
+            self.load_exam_list()
+            if hasattr(self, "_selected_index"):
+                self._parent.listView.setCurrentIndex(self._exam_model.index(self._selected_index))
+                self.on_exam_selected(self._exam_model.index(self._selected_index))
