@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QWidget
-from PySide6.QtGui import QStandardItemModel, QStandardItem
+from PySide6.QtGui import QStandardItemModel # , QStandardItem
 from ui_page.ui_page_two import Ui_page_two
 from view.pages.page_two_handler import PageTwoHandler
 

@@ -5,7 +5,7 @@ from collections import defaultdict
 from PySide6.QtWidgets import QTableWidgetItem, QListWidgetItem, QVBoxLayout
 from PySide6.QtCharts import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis
 from PySide6.QtGui import QPainter
-from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex
+# from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex
 
 from common.utils import show_dialog
 from view.pages.page_one_handler import ExamListModel  # ✅ 复用模型类

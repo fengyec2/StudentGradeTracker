@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 
 from common.utils import show_dialog
-from workers.TaskManager import task_manager
+# from workers.TaskManager import task_manager
 
 DATA_DIR = "data"
 EXAMS_DIR = os.path.join(DATA_DIR, "exams")

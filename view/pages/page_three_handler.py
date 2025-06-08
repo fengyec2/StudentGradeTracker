@@ -1,7 +1,7 @@
 import os
 import json
 from PySide6.QtGui import QStandardItemModel, QStandardItem
-from PySide6.QtWidgets import QTableWidgetItem, QTableWidget
+# from PySide6.QtWidgets import QTableWidgetItem, QTableWidget
 from PySide6.QtCore import Qt
 from common.utils import get_all_students, get_student_data, get_exam_display_name
 
