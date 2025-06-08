@@ -11,7 +11,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 
-from common.utils import show_dialog
+from common.utils import show_dialog, load_exam_meta
 # from workers.TaskManager import task_manager
 
 DATA_DIR = "data"
@@ -81,14 +81,19 @@ class PageOneHandler(QObject):
         self._parent.btnDelete.clicked.connect(self.delete_exam)
 
     def load_exam_list(self):
-        if not os.path.exists(META_PATH):
+        try:
+            meta = load_exam_meta()
+            # ✅ 注意 reverse=True，PageOne 是倒序显示（最新在上）
+            exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"], reverse=True)
+            self._exam_model = ExamListModel(exams)
+        except Exception as e:
+            show_dialog(self._parent, f"加载考试元数据失败：{e}")
             self._exam_model = ExamListModel([])
-        else:
-            with open(META_PATH, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                exams = sorted(data["exams_order"], key=lambda e: e["real_date"], reverse=True)
-                self._exam_model = ExamListModel(exams)
+    
+        # ✅ 一定要重新设置 model，绑定到 listView
         self._parent.listView.setModel(self._exam_model)
+
+
 
     def import_exam(self):
         filepath, _ = QFileDialog.getOpenFileName(self._parent, "选择考试 Excel 文件", "", "Excel 文件 (*.xlsx)")

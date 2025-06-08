@@ -5,30 +5,30 @@ from PySide6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis, QCateg
 from PySide6.QtGui import QPainter, QStandardItem
 from PySide6.QtCore import QPointF, Qt
 from common.my_logger import my_logger as logger
-from common.utils import show_dialog, get_all_students, get_student_data, get_exam_display_name
+from common.utils import show_dialog, get_all_students, get_student_data, get_exam_display_name, load_exam_meta
 
 DATA_DIR = "data"
-EXAM_META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
+# EXAM_META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
 
 
 class PageTwoHandler:
     def __init__(self, ui):
         self.ui = ui
 
-    def load_exam_meta(self):
-        try:
-            with open(EXAM_META_PATH, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception as e:
-            logger.exception(e)
-            show_dialog(parent=None, content=f'无法读取考试元数据:{e}')
-            return {"exams_order": []}
+    # def load_exam_meta(self):
+    #     try:
+    #         with open(EXAM_META_PATH, "r", encoding="utf-8") as f:
+    #             return json.load(f)
+    #     except Exception as e:
+    #         logger.exception(e)
+    #         show_dialog(parent=None, content=f'无法读取考试元数据:{e}')
+    #         return {"exams_order": []}
 
     def load_student_list(self, model):
         model.clear()
         for student in get_all_students():
             model.appendRow(QStandardItem(student["name"]))
-        self.exam_meta = self.load_exam_meta()
+        self.exam_meta = load_exam_meta()  # ✅ 每次刷新都读取最新排序
 
     def plot_student_ranks(self, student_name):
         student_data = get_student_data(student_name)

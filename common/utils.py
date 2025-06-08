@@ -2,11 +2,12 @@ import os
 import json
 
 from enum import Enum
-
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QLabel
 from qfluentwidgets import Theme, Dialog, StyleSheetBase, qconfig
+from common.my_logger import my_logger as logger
 
+EXAM_META_PATH = os.path.join("data", "exam_meta.json")
 
 class StyleSheet(StyleSheetBase, Enum):
     """ Style sheet  """
@@ -72,6 +73,15 @@ def get_student_data(student_name):
         return None
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+    
+
+def load_exam_meta():
+    try:
+        with open(EXAM_META_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        logger.exception(e)
+        return {"exams_order": []}
 
 
 def get_exam_display_name(filename):

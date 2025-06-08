@@ -7,12 +7,12 @@ from PySide6.QtCharts import QChart, QChartView, QBarSet, QBarSeries, QBarCatego
 from PySide6.QtGui import QPainter
 # from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex
 
-from common.utils import show_dialog
+from common.utils import show_dialog, load_exam_meta  # ✅ 替代 json+路径硬编码
 from view.pages.page_one_handler import ExamListModel  # ✅ 复用模型类
 
 DATA_DIR = "data"
 STUDENTS_DIR = os.path.join(DATA_DIR, "students")
-META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
+# META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
 
 
 class PageClassGradeHandler:
@@ -31,17 +31,19 @@ class PageClassGradeHandler:
 
     def load_exam_list(self):
         """采用统一模型方式加载考试列表"""
-        if not os.path.exists(META_PATH):
+        try:
+            meta = load_exam_meta()
+            exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"])
+            self._exam_model = ExamListModel(exams)
+        except Exception as e:
+            show_dialog(self.ui, f"加载考试元数据失败：{e}")
             self._exam_model = ExamListModel([])
-        else:
-            try:
-                with open(META_PATH, "r", encoding="utf-8") as f:
-                    meta = json.load(f)
-                    exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"])
-                    self._exam_model = ExamListModel(exams)
-            except Exception as e:
-                show_dialog(self.ui, f"加载考试元数据失败：{e}")
-                self._exam_model = ExamListModel([])
+
+        self.ui.comboExam.clear()
+        for i in range(self._exam_model.rowCount()):
+            exam = self._exam_model.get_exam(i)
+            self.ui.comboExam.addItem(exam["display_name"], userData=exam["filename"])
+
 
         # 手动绑定 QComboBox（QComboBox 不支持 setModel 默认展示）
         self.ui.comboExam.clear()
