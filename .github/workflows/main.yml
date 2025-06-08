@@ -17,29 +17,26 @@ jobs:
       with:
         python-version: '3.10'
         
-    - name: Cache pip dependencies
+    - name: Cache dependencies
       uses: actions/cache@v4
+      id: cache
       with:
         path: |
           ~\AppData\Local\pip\Cache
           ~\AppData\Local\Temp\pip*
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          ${{ runner.temp }}\mingw64
+        key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}-mingw64-14.2.0
         restore-keys: |
-          ${{ runner.os }}-pip-
+          ${{ runner.os }}-${{ hashFiles('requirements.txt') }}-
+          ${{ runner.os }}-
     
-    - name: Install dependencies
+    - name: Install Python dependencies
       run: |
-        pip install --upgrade pip
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
-
-    - name: Cache MinGW64
-      uses: actions/cache@v4
-      with:
-        path: ${{ runner.temp }}\mingw64
-        key: ${{ runner.os }}-mingw64-14.2.0
         
     - name: Install MinGW64 (winlibs)
-      if: steps.cache-mingw.outputs.cache-hit != 'true'
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         $url = "https://github.com/brechtsanders/winlibs_mingw/releases/download/14.2.0posix-19.1.1-12.0.0-msvcrt-r2/winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64msvcrt-12.0.0-r2.zip"
         $tempDir = "$env:TEMP\mingw64"
@@ -48,14 +45,14 @@ jobs:
         Expand-Archive -Path "$tempDir\mingw64.zip" -DestinationPath "$tempDir"
         echo "$tempDir\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
         
+    - name: Verify MinGW installation
+      run: gcc --version
+      
     - name: Run Nuitka build
       run: python build.py
       
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4.6.2
+      uses: actions/upload-artifact@v4
       with:
         name: bundled-app
-        path: |
-          dist/
-          *.bin
-          *.exe
+        path: out/entry.dist/**  # 上传整个目录结构
