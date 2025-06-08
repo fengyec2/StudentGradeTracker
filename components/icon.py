@@ -15,6 +15,8 @@ class MyIcon(FluentIconBase, Enum):
     EXCEL = 'excel'
     TOOL = 'tool'
     SETTING = 'setting'
+    ADD = 'add'
+    CLASS = 'class'
 
     def path(self, theme=Theme.AUTO):
         if theme == Theme.AUTO:

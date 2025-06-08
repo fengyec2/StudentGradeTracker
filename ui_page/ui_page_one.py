@@ -84,9 +84,6 @@ class Ui_page_one(object):
         sizePolicy1.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
         self.pushButton.setSizePolicy(sizePolicy1)
         self.pushButton.setMinimumSize(QSize(0, 38))
-        icon = QIcon()
-        icon.addFile(u":/icons/import.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton.setIcon(icon)
 
         self.buttonLayout.addWidget(self.pushButton)
 
@@ -216,9 +213,9 @@ class Ui_page_one(object):
         self.pushButton.setText(QCoreApplication.translate("page_one", u"\u5bfc\u5165\u65b0\u8003\u8bd5", None))
         self.btnDelete.setText(QCoreApplication.translate("page_one", u"\u5220\u9664", None))
         self.labelPreview_2.setText(QCoreApplication.translate("page_one", u"\u8003\u8bd5\u4fe1\u606f", None))
-        self.labelExamName.setText(QCoreApplication.translate("page_one", u"\u8003\u8bd5\u540d\u79f0\uff1a\u671f\u4e2d\u8003\u8bd5", None))
+        self.labelExamName.setText(QCoreApplication.translate("page_one", u"\u8bf7\u9009\u62e9\u8003\u8bd5", None))
         self.btnEditExamName.setText(QCoreApplication.translate("page_one", u"\u4fee\u6539", None))
-        self.labelExamDate.setText(QCoreApplication.translate("page_one", u"\u8003\u8bd5\u65e5\u671f\uff1a2024-10-10", None))
+        self.labelExamDate.setText(QCoreApplication.translate("page_one", u"\u8bf7\u9009\u62e9\u8003\u8bd5", None))
         self.btnEditExamDate.setText(QCoreApplication.translate("page_one", u"\u4fee\u6539", None))
         self.labelPreview.setText(QCoreApplication.translate("page_one", u"\u6570\u636e\u9884\u89c8 (\u51710\u884c)", None))
     # retranslateUi

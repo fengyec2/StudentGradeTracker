@@ -91,10 +91,6 @@
           <property name="text">
            <string>导入新考试</string>
           </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>:/icons/import.svg</normaloff>:/icons/import.svg</iconset>
-          </property>
          </widget>
         </item>
         <item>

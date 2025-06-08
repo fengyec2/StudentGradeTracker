@@ -43,7 +43,7 @@ class MainWindow(FluentWindow):
             {'widget': self.pageOne, 'icon': MyIcon.CLICK, 'text': '原始文件'},
             {'widget': self.pageTwo, 'icon': MyIcon.EXCEL, 'text': '成绩曲线'},
             {'widget': self.pageThree, 'icon': MyIcon.TOOL, 'text': '个人成绩'},
-            {'widget': self.pageClassGrade, 'icon': MyIcon.TOOL, 'text': '班级成绩'},
+            {'widget': self.pageClassGrade, 'icon': MyIcon.CLASS, 'text': '班级成绩'},
         ]
         for item in sub_interface_list:
             self.addSubInterface(item['widget'], item['icon'], item['text'])
