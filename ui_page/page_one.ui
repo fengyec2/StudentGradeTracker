@@ -22,6 +22,12 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">
         background-color: white;
@@ -45,20 +51,22 @@
         <property name="styleSheet">
          <string notr="true">
            QListView {
-             border: 1px solid #ddd;
+             border: 1px solid #dcdfe6;
              border-radius: 4px;
-             padding: 5px;
+             padding: 4px;
+             background-color: #ffffff;
            }
            QListView::item {
-             padding: 8px;
-             border-bottom: 1px solid #eee;
+             padding: 8px 12px;
+             border-bottom: 1px solid #ebeef5;
            }
            QListView::item:hover {
-             background-color: #f0f7ff;
+             background-color: #f5f7fa;
            }
            QListView::item:selected {
-             background-color: #e1f0ff;
-             color: #0066cc;
+             background-color: #ecf5ff;
+             color: #409eff;
+             border-left: 3px solid #409eff;
            }
          </string>
         </property>

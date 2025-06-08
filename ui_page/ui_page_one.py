@@ -35,6 +35,7 @@ class Ui_page_one(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.leftPanel.sizePolicy().hasHeightForWidth())
         self.leftPanel.setSizePolicy(sizePolicy)
+        self.leftPanel.setMaximumSize(QSize(300, 16777215))
         self.leftPanel.setStyleSheet(u"\n"
 "        background-color: white;\n"
 "        border-radius: 8px;\n"
@@ -52,20 +53,22 @@ class Ui_page_one(object):
         self.listView.setObjectName(u"listView")
         self.listView.setStyleSheet(u"\n"
 "           QListView {\n"
-"             border: 1px solid #ddd;\n"
+"             border: 1px solid #dcdfe6;\n"
 "             border-radius: 4px;\n"
-"             padding: 5px;\n"
+"             padding: 4px;\n"
+"             background-color: #ffffff;\n"
 "           }\n"
 "           QListView::item {\n"
-"             padding: 8px;\n"
-"             border-bottom: 1px solid #eee;\n"
+"             padding: 8px 12px;\n"
+"             border-bottom: 1px solid #ebeef5;\n"
 "           }\n"
 "           QListView::item:hover {\n"
-"             background-color: #f0f7ff;\n"
+"             background-color: #f5f7fa;\n"
 "           }\n"
 "           QListView::item:selected {\n"
-"             background-color: #e1f0ff;\n"
-"             color: #0066cc;\n"
+"             background-color: #ecf5ff;\n"
+"             color: #409eff;\n"
+"             border-left: 3px solid #409eff;\n"
 "           }\n"
 "         ")
 
