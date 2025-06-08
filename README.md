@@ -3,17 +3,23 @@
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![PySide6](https://img.shields.io/badge/PySide6-6.0+-green.svg)
 
-一个基于PySide6开发的现代化学生成绩跟踪分析工具，提供成绩可视化、趋势分析和班级对比功能。
+一个 Fluent Design 风格 UI 的学生成绩跟踪分析工具，提供成绩可视化、趋势分析和班级对比功能。
 
 模板来自 [Cheukfung](https://github.com/Cheukfung/pyqt-fluent-widgets-template)
 
 ## ✨ 功能特性
 
-- 📈 学生个人成绩趋势折线图
-- 📊 班级学科平均分对比
-- 📂 Excel原始数据导入
-- 🎨 Fluent Design风格UI
-- ⚡ 异步任务处理
+| 功能 | 状态 |
+|------|------|
+| 📈 原始文件 | ✅ 已实现 |
+| 📊 成绩曲线 | ✅ 已实现 |
+| 📂 个人成绩 | ✅ 已实现 |
+| 🎎 班级成绩 | ✅ 已实现 |
+| ⚙️ 系统设置 | ✅ 已实现 |
+
+|  原始文件  |  成绩曲线  |  个人成绩  |  班级成绩  |
+|-----------|-----------|------------|------------|
+| ![原始文件](screen_shot\raw_data.png "原始文件") | ![成绩曲线](screen_shot\trend_chart.png "成绩曲线") | ![个人成绩](screen_shot\score_table.png "个人成绩") | ![班级成绩](screen_shot\class_compare.png "M班级成绩") |
 
 ## 🚀 快速开始
 
@@ -59,7 +65,7 @@ python entry.py
 
 ### UI设计流程
 
-1. 使用Qt Designer编辑`ui_page/`目录下的.ui文件
+1. 使用 Qt Designer 编辑 `ui_page/` 目录下的.ui文件
 2. 保存修改后运行资源打包脚本：
    ```bash
    python pack_resources.py
@@ -67,9 +73,9 @@ python entry.py
 
 ### 添加新页面
 
-1. 在`ui_page/`添加新.ui文件
+1. 在 `ui_page/` 添加新 .ui 文件
 2. 运行资源打包脚本
-3. 在`view/pages/`创建对应的.py和_handler.py文件
+3. 在 `view/pages/` 创建对应的 .py 和 _handler.py 文件
 
 ### 数据存储规范
 
@@ -115,19 +121,9 @@ data/
 }
 ```
 
-## 📝 功能模块
-
-| 功能 | 状态 |
-|------|------|
-| 原始文件查看 | ✅ 已实现 |
-| 成绩趋势折线图 | ✅ 已实现 |
-| 个人成绩汇总 | ✅ 已实现 |
-| 班级成绩对比 | ✅ 已实现 |
-| 系统设置 | ✅ 已实现 |
-
 ## 💻 开发实践
 
-- **分层架构**：UI与业务逻辑分离
-- **异步处理**：使用QRunnable处理耗时操作
-- **配置管理**：通过config.json管理用户设置
-- **日志系统**：内置Logger模块记录运行日志
+- **分层架构**：UI 与业务逻辑分离
+- **异步处理**：使用 QRunnable 处理耗时操作
+- **配置管理**：通过 config.json 管理用户设置
+- **日志系统**：内置 Logger 模块记录运行日志
