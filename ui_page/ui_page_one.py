@@ -217,6 +217,6 @@ class Ui_page_one(object):
         self.btnEditExamName.setText(QCoreApplication.translate("page_one", u"\u4fee\u6539", None))
         self.labelExamDate.setText(QCoreApplication.translate("page_one", u"\u8bf7\u9009\u62e9\u8003\u8bd5", None))
         self.btnEditExamDate.setText(QCoreApplication.translate("page_one", u"\u4fee\u6539", None))
-        self.labelPreview.setText(QCoreApplication.translate("page_one", u"\u6570\u636e\u9884\u89c8 (\u51710\u884c)", None))
+        self.labelPreview.setText(QCoreApplication.translate("page_one", u"\u6570\u636e\u9884\u89c8", None))
     # retranslateUi
 

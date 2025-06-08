@@ -6,7 +6,7 @@ from datetime import datetime
 
 from PySide6.QtCore import QObject, QAbstractListModel, Qt, QModelIndex
 from PySide6.QtWidgets import (
-    QFileDialog, QDialog, QVBoxLayout, QLabel,
+    QFileDialog, QDialog, QVBoxLayout, QLabel, QMessageBox,
     QLineEdit, QDateEdit, QPushButton, QHBoxLayout, QInputDialog
 )
 from PySide6.QtGui import QStandardItemModel, QStandardItem
@@ -78,6 +78,7 @@ class PageOneHandler(QObject):
         self._parent.pushButton.clicked.connect(self.import_exam)
         self._parent.btnEditExamName.clicked.connect(self.edit_exam_name)
         self._parent.btnEditExamDate.clicked.connect(self.edit_exam_date)
+        self._parent.btnDelete.clicked.connect(self.delete_exam)
 
     def load_exam_list(self):
         if not os.path.exists(META_PATH):
@@ -247,3 +248,67 @@ class PageOneHandler(QObject):
             if hasattr(self, "_selected_index"):
                 self._parent.listView.setCurrentIndex(self._exam_model.index(self._selected_index))
                 self.on_exam_selected(self._exam_model.index(self._selected_index))
+    
+    def delete_exam(self):
+        if not hasattr(self, "_selected_index"):
+            show_dialog(self._parent, "请先选择一个考试")
+            return
+
+        exam = self._exam_model.get_exam(self._selected_index)
+        if not exam:
+            return
+
+        confirm = QMessageBox.question(
+            self._parent,
+            "确认删除",
+            f"确定要删除考试：{exam['display_name']}？该操作无法恢复！",
+            QMessageBox.Yes | QMessageBox.No
+        )
+
+
+        if confirm != QMessageBox.Yes:
+            return
+
+        filename = exam["filename"]
+
+        # 1. 删除 EXCEL 文件
+        exam_path = os.path.join(EXAMS_DIR, filename)
+        if os.path.exists(exam_path):
+            try:
+                os.remove(exam_path)
+            except Exception as e:
+                show_dialog(self._parent, f"删除考试文件失败：{e}")
+                return
+
+        # 2. 删除元数据
+        try:
+            with open(META_PATH, "r", encoding="utf-8") as f:
+                meta = json.load(f)
+            meta["exams_order"] = [e for e in meta["exams_order"] if e["filename"] != filename]
+            with open(META_PATH, "w", encoding="utf-8") as f:
+                json.dump(meta, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            show_dialog(self._parent, f"更新考试元数据失败：{e}")
+            return
+
+        # 3. 删除学生 JSON 中对应考试记录
+        for file in os.listdir(STUDENTS_DIR):
+            if not file.endswith(".json"):
+                continue
+            path = os.path.join(STUDENTS_DIR, file)
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    student = json.load(f)
+                new_exams = [e for e in student.get("exams", []) if e.get("filename") != filename]
+                if len(new_exams) < len(student.get("exams", [])):
+                    student["exams"] = new_exams
+                    with open(path, "w", encoding="utf-8") as f:
+                        json.dump(student, f, ensure_ascii=False, indent=2)
+            except Exception:
+                continue  # 忽略错误
+
+        show_dialog(self._parent, f"已删除考试：{exam['display_name']}")
+        self.load_exam_list()
+        self._parent.labelExamName.setText("")
+        self._parent.labelExamDate.setText("")
+        self._parent.tableView.setModel(QStandardItemModel())

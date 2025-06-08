@@ -21,6 +21,8 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QFram
     QTabWidget, QTableWidget, QTableWidgetItem, QVBoxLayout,
     QWidget)
 
+from qfluentwidgets import PrimaryPushButton
+
 class Ui_page_class_grade(object):
     def setupUi(self, page_class_grade):
         if not page_class_grade.objectName():
@@ -57,6 +59,7 @@ class Ui_page_class_grade(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.btnRefresh.sizePolicy().hasHeightForWidth())
         self.btnRefresh.setSizePolicy(sizePolicy2)
+        self.btnRefresh.setMinimumSize(QSize(100, 0))
 
         self.horizontalLayout.addWidget(self.btnRefresh)
 
@@ -108,10 +111,11 @@ class Ui_page_class_grade(object):
 
         self.horizontalLayout.addWidget(self.listClasses)
 
-        self.btnQuery = QPushButton(self.frameQueryCard)
+        self.btnQuery = PrimaryPushButton(self.frameQueryCard)
         self.btnQuery.setObjectName(u"btnQuery")
         sizePolicy2.setHeightForWidth(self.btnQuery.sizePolicy().hasHeightForWidth())
         self.btnQuery.setSizePolicy(sizePolicy2)
+        self.btnQuery.setMinimumSize(QSize(100, 0))
 
         self.horizontalLayout.addWidget(self.btnQuery)
 
