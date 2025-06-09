@@ -1,24 +1,59 @@
 name: Build on Multi-platforms
-on: [push, pull_request]  # 触发条件
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      target_os:
+        description: 'Target OS (optional)'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+      python_version:
+        description: 'Python version (optional)'
+        required: false
+        default: '3.10'
+        type: string
 
 jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]  # 测试 Linux 和 macOS
+        os: [ubuntu-latest, macos-latest, windows-latest] 
         python-version: ["3.10"]
+        # 如果手动触发时指定了 target_os，则覆盖默认的 matrix.os
+        include:
+          - ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.target_os != 'all' }}:
+              os: [${{ github.event.inputs.target_os }}]
+              python-version: [${{ github.event.inputs.python_version || '3.10' }}]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Linux 依赖安装
       - name: Install Linux dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y libegl1 libgl1 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0
           # 可选：安装更多 Qt 依赖
-          sudo apt-get install -y libxcb-cursor0 libxcb-xfixes0 libxcb-shape0 libxcb-sync1
+          # sudo apt-get install -y libxcb-cursor0 libxcb-xfixes0 libxcb-shape0 libxcb-sync1
+
+      # Windows 依赖安装（示例：安装 Chocolatey 或特定工具）
+      - name: Install Windows dependencies
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          # 示例：通过 Chocolatey 安装工具（如需要）
+          # choco install -y cmake
+          # 或直接调用 pip/pip3
+          python -m pip install --upgrade pip
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -29,6 +64,7 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      # 各平台构建步骤
       - name: Build Linux (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: python build_linux.py
@@ -36,6 +72,11 @@ jobs:
       - name: Build macOS
         if: matrix.os == 'macos-latest'
         run: python build_macos.py
+
+      - name: Build Windows
+        if: matrix.os == 'windows-latest'
+        shell: cmd  # 或 pwsh（根据脚本类型选择）
+        run: python build_windows.py
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
