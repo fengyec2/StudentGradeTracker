@@ -34,6 +34,26 @@ jobs:
           key: ${{ runner.os }}-apt-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-apt-
+
+      - name: Cache Nuitka MinGW (Windows)
+        if: matrix.os == 'windows-latest'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~\AppData\Local\Nuitka\Nuitka\Cache\DOWNLO~1
+            ~\AppData\Local\Nuitka\Nuitka\Cache\downloads
+          key: ${{ runner.os }}-nuitka-mingw-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-nuitka-mingw-
+      
+      - name: Cache Nuitka ccache (macOS)
+        if: matrix.os == 'macos-latest'
+        uses: actions/cache@v3
+        with:
+          path: ~/Library/Caches/Nuitka/downloads
+          key: ${{ runner.os }}-nuitka-ccache-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-nuitka-ccache-
       
       - name: Install Linux dependencies
         if: matrix.os == 'ubuntu-latest'
@@ -84,8 +104,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-apt-
       
+      - name: Cache Nuitka MinGW (Windows)
+        if: matrix.os == 'windows-latest'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~\AppData\Local\Nuitka\Nuitka\Cache\DOWNLO~1
+            ~\AppData\Local\Nuitka\Nuitka\Cache\downloads
+          key: ${{ runner.os }}-nuitka-mingw-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-nuitka-mingw-
+      
+      - name: Cache Nuitka ccache (macOS)
+        if: matrix.os == 'macos-latest'
+        uses: actions/cache@v3
+        with:
+          path: ~/Library/Caches/Nuitka/downloads
+          key: ${{ runner.os }}-nuitka-ccache-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-nuitka-ccache-
+
       - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-latest'
+        if: github.event.inputs.platform == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y libegl1 libgl1 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0
