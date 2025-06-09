@@ -5,25 +5,19 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      target_os:
-        description: 'Target OS (optional)'
-        required: false
-        default: 'all'
+      platform:
+        description: 'Select platform to build'
+        required: true
+        default: 'ubuntu-latest'
         type: choice
         options:
-          - all
           - ubuntu-latest
           - macos-latest
           - windows-latest
-      python_version:
-        description: 'Python version (optional)'
-        required: false
-        default: '3.10'
-        type: string
 
 jobs:
   build:
-    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.target_os == 'all' }}
+    if: github.event_name != 'workflow_dispatch' || matrix.os == inputs.platform
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -42,64 +36,17 @@ jobs:
       - name: Install Windows dependencies
         if: matrix.os == 'windows-latest'
         shell: pwsh
-        run: python -m pip install --upgrade pip
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Build Linux (Ubuntu)
-        if: matrix.os == 'ubuntu-latest'
-        run: python build_linux.py
-
-      - name: Build macOS
-        if: matrix.os == 'macos-latest'
-        run: python build_macos.py
-
-      - name: Build Windows
-        if: matrix.os == 'windows-latest'
-        shell: cmd
-        run: python build_windows.py
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.os }}-build
-          path: out/
-
-  build-dispatch:
-    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.target_os != 'all' }}
-    strategy:
-      matrix:
-        os: ["${{ github.event.inputs.target_os }}"]
-        python-version: [${{ github.event.inputs.python_version || '3.10' }}]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libegl1 libgl1 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0
+          python -m pip install --upgrade pip
 
-      - name: Install Windows dependencies
-        if: matrix.os == 'windows-latest'
-        shell: pwsh
-        run: python -m pip install --upgrade pip
-
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
 
       - name: Build Linux (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
