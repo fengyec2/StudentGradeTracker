@@ -25,6 +25,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Cache APT packages
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/cache@v3
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-
+      
       - name: Install Linux dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -32,14 +42,26 @@ jobs:
           sudo apt-get install -y libegl1 libgl1 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0
           # 可选：安装更多 Qt 依赖
           # sudo apt-get install -y libxcb-cursor0 libxcb-xfixes0 libxcb-shape0 libxcb-sync1
+          
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+          
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            
       - name: Install dependencies
         run: pip install -r requirements.txt
+        
       - name: Build
         run: python build_${{ matrix.os == 'windows-latest' && 'windows' || (matrix.os == 'macos-latest' && 'macos' || 'linux') }}.py
+        
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -52,6 +74,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Cache APT packages
+        if: github.event.inputs.platform == 'ubuntu-latest'
+        uses: actions/cache@v3
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-
+      
       - name: Install Linux dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -59,12 +91,23 @@ jobs:
           sudo apt-get install -y libegl1 libgl1 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0
           # 可选：安装更多 Qt 依赖
           # sudo apt-get install -y libxcb-cursor0 libxcb-xfixes0 libxcb-shape0 libxcb-sync1
+          
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+          
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            
       - name: Install dependencies
         run: pip install -r requirements.txt
+        
       - name: Build
         run: |
           if [ "${{ github.event.inputs.platform }}" = "ubuntu-latest" ]; then
@@ -75,6 +118,7 @@ jobs:
             python build_windows.py
           fi
         shell: bash
+        
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:

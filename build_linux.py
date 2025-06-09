@@ -3,6 +3,7 @@ from common.config import VERSION, AUTHOR
 
 app_name = 'StudentGradeTracker'
 build_command = "nuitka --standalone --enable-plugin=pyside6 "
+build_command += "--assume-yes-for-downloads "
 build_command += "--output-dir=out "
 build_command += "--follow-import-to=common,components,view "
 build_command += "--include-data-dir=./resource=resource "  # 包含资源文件
