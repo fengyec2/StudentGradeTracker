@@ -2,196 +2,280 @@
 <RCC>
     
     
+    
   
+    
     
     <qresource prefix="resource">
         
         
+        
     
+        
         
         <file>qss/dark/login_window.qss</file>
         
         
+        
     
+        
         
         <file>qss/light/login_window.qss</file>
         
         
+        
     
+        
         
         <file>images/logo.png</file>
         
         
+        
 
     
+        
         
         <file>qss/dark/main_window.qss</file>
         
         
+        
     
+        
         
         <file>qss/light/main_window.qss</file>
         
         
+        
     
+        
         
         <file>qss/dark/setting_interface.qss</file>
         
         
+        
     
+        
         
         <file>qss/light/setting_interface.qss</file>
         
         
+        
     
+        
         
         <file>qss/dark/page_one.qss</file>
         
         
+        
     
+        
         
         <file>qss/light/page_one.qss</file>
         
         
+        
     
+        
         
         <file>qss/dark/page_two.qss</file>
         
         
+        
     
+        
         
         <file>qss/light/page_two.qss</file>
         
         
+        
     
+        
         
         <file>qss/dark/page_three.qss</file>
         
         
+        
     
         
+        
         <file>qss/light/page_three.qss</file>
+        
         
         
 
     
         
+        
         <file>i18n/zh.qm</file>
         
         
+        
     
+        
         
         <file>images/icons/click_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/click_white.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/excel_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/excel_white.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/logout_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/logout_white.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/ocr_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/ocr_white.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/save_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/save_session_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/save_session_white.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/save_white.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/setting_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/setting_white.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/tool_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/tool_white.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/add_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/add_white.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/class_black.svg</file>
         
         
+        
     
+        
         
         <file>images/icons/class_white.svg</file>
         
         
+        
   
+        
         
         <file>qss/dark/page_class_grade.qss</file>
         
         
+        
+        
         <file>qss/light/page_class_grade.qss</file>
         
+        
     
+        
         <file>qss/dark/page_top_in_class.qss</file>
+        
+        
         <file>qss/light/page_top_in_class.qss</file>
+        
+    
+        <file>qss/dark/page_top_in_grade.qss</file>
+        <file>qss/light/page_top_in_grade.qss</file>
     </qresource>
     
     
+    
+
 
 
 </RCC>
