@@ -17,6 +17,7 @@ class StyleSheet(StyleSheetBase, Enum):
     SETTINGS = "setting_interface"
     PAGE_ONE = "page_one"
     PAGE_TWO = "page_two"
+    PAGE_THREE = "page_three"
 
     def path(self, theme=Theme.AUTO):
         theme = qconfig.theme if theme == Theme.AUTO else theme

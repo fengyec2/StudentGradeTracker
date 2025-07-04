@@ -12,6 +12,8 @@
     <file>qss/light/page_one.qss</file>
     <file>qss/dark/page_two.qss</file>
     <file>qss/light/page_two.qss</file>
+    <file>qss/dark/page_three.qss</file>
+    <file>qss/light/page_three.qss</file>
 
     <file>i18n/zh.qm</file>
     <file>images/icons/click_black.svg</file>

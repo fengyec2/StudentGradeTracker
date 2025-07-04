@@ -36,12 +36,6 @@ class Ui_page_three(object):
         sizePolicy.setHeightForWidth(self.leftFrame.sizePolicy().hasHeightForWidth())
         self.leftFrame.setSizePolicy(sizePolicy)
         self.leftFrame.setMaximumSize(QSize(200, 16777215))
-        self.leftFrame.setStyleSheet(u"\n"
-"        background-color: white;\n"
-"        border-radius: 8px;\n"
-"        padding: 12px;\n"
-"        border: 1px solid #e4e7ed;\n"
-"      ")
         self.leftContentLayout = QVBoxLayout(self.leftFrame)
         self.leftContentLayout.setObjectName(u"leftContentLayout")
         self.labelTitle = QLabel(self.leftFrame)
@@ -52,26 +46,6 @@ class Ui_page_three(object):
 
         self.listView = QListView(self.leftFrame)
         self.listView.setObjectName(u"listView")
-        self.listView.setStyleSheet(u"\n"
-"           QListView {\n"
-"             border: 1px solid #dcdfe6;\n"
-"             border-radius: 4px;\n"
-"             padding: 4px;\n"
-"             background-color: #ffffff;\n"
-"           }\n"
-"           QListView::item {\n"
-"             padding: 8px 12px;\n"
-"             border-bottom: 1px solid #ebeef5;\n"
-"           }\n"
-"           QListView::item:hover {\n"
-"             background-color: #f5f7fa;\n"
-"           }\n"
-"           QListView::item:selected {\n"
-"             background-color: #ecf5ff;\n"
-"             color: #409eff;\n"
-"             border-left: 3px solid #409eff;\n"
-"           }\n"
-"         ")
 
         self.leftContentLayout.addWidget(self.listView)
 
@@ -94,30 +68,10 @@ class Ui_page_three(object):
 
         self.rightFrame = QFrame(page_three)
         self.rightFrame.setObjectName(u"rightFrame")
-        self.rightFrame.setStyleSheet(u"\n"
-"        background-color: white;\n"
-"        border-radius: 8px;\n"
-"        padding: 16px;\n"
-"        border: 1px solid #e4e7ed;\n"
-"      ")
         self.chartLayout_2 = QVBoxLayout(self.rightFrame)
         self.chartLayout_2.setObjectName(u"chartLayout_2")
         self.tableView = QTableView(self.rightFrame)
         self.tableView.setObjectName(u"tableView")
-        self.tableView.setStyleSheet(u"\n"
-"           QTableView {\n"
-"             border: 1px solid #ddd;\n"
-"             gridline-color: #f0f0f0;\n"
-"             border-radius: 4px;\n"
-"           }\n"
-"           QHeaderView::section {\n"
-"             background-color: #f7f7f7;\n"
-"             padding: 5px;\n"
-"             border: none;\n"
-"             min-height: 80px;\n"
-"             min-width: 40px;\n"
-"           }\n"
-"         ")
 
         self.chartLayout_2.addWidget(self.tableView)
 
