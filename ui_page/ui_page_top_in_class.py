@@ -29,11 +29,6 @@ class Ui_page_top_in_class(object):
         self.leftPanel = QFrame(page_top_in_class)
         self.leftPanel.setObjectName(u"leftPanel")
         self.leftPanel.setMaximumSize(QSize(280, 16777215))
-        self.leftPanel.setStyleSheet(u"\n"
-"        background-color: white;\n"
-"        border-radius: 8px;\n"
-"        padding: 10px;\n"
-"      ")
         self.gridLayout = QGridLayout(self.leftPanel)
         self.gridLayout.setObjectName(u"gridLayout")
         self.verticalLayout_2 = QVBoxLayout()
@@ -46,26 +41,6 @@ class Ui_page_top_in_class(object):
 
         self.listView = QListView(self.leftPanel)
         self.listView.setObjectName(u"listView")
-        self.listView.setStyleSheet(u"\n"
-"           QListView {\n"
-"             border: 1px solid #dcdfe6;\n"
-"             border-radius: 4px;\n"
-"             padding: 4px;\n"
-"             background-color: #ffffff;\n"
-"           }\n"
-"           QListView::item {\n"
-"             padding: 8px 12px;\n"
-"             border-bottom: 1px solid #ebeef5;\n"
-"           }\n"
-"           QListView::item:hover {\n"
-"             background-color: #f5f7fa;\n"
-"           }\n"
-"           QListView::item:selected {\n"
-"             background-color: #ecf5ff;\n"
-"             color: #409eff;\n"
-"             border-left: 3px solid #409eff;\n"
-"           }\n"
-"         ")
 
         self.verticalLayout_2.addWidget(self.listView)
 
@@ -77,11 +52,6 @@ class Ui_page_top_in_class(object):
 
         self.rightPanel = QFrame(page_top_in_class)
         self.rightPanel.setObjectName(u"rightPanel")
-        self.rightPanel.setStyleSheet(u"\n"
-"        background-color: white;\n"
-"        border-radius: 8px;\n"
-"        padding: 10px;\n"
-"      ")
         self.gridLayout_2 = QGridLayout(self.rightPanel)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.verticalLayout = QVBoxLayout()
