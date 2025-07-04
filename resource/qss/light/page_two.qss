@@ -1,0 +1,35 @@
+QWidget#leftFrame, QWidget#chartWidget {
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #e4e7ed;
+}
+
+QLabel#labelTitle {
+    color: #2e2e2e;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QListView {
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    padding: 4px;
+    background-color: #ffffff;
+    color: #2e2e2e;
+}
+
+QListView::item {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ebeef5;
+}
+
+QListView::item:hover {
+    background-color: #f5f7fa;
+}
+
+QListView::item:selected {
+    background-color: #ecf5ff;
+    color: #409eff;
+    border-left: 3px solid #409eff;
+}

@@ -2,12 +2,17 @@ from PySide6.QtWidgets import QWidget
 from PySide6.QtGui import QStandardItemModel # , QStandardItem
 from ui_page.ui_page_two import Ui_page_two
 from view.pages.page_two_handler import PageTwoHandler
+from common.utils import StyleSheet
 
 
 class PageTwo(QWidget, Ui_page_two):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+
+        # ✅ 应用 Fluent 样式
+        StyleSheet.PAGE_TWO.apply(self)
+
         self.handler = PageTwoHandler(self)
         self.pushButton.clicked.connect(self.on_import_button_clicked)
 
