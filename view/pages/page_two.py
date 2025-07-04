@@ -3,6 +3,7 @@ from PySide6.QtGui import QStandardItemModel # , QStandardItem
 from ui_page.ui_page_two import Ui_page_two
 from view.pages.page_two_handler import PageTwoHandler
 from common.utils import StyleSheet
+from common.config import cfg
 
 
 class PageTwo(QWidget, Ui_page_two):
@@ -12,6 +13,7 @@ class PageTwo(QWidget, Ui_page_two):
 
         # ✅ 应用 Fluent 样式
         StyleSheet.PAGE_TWO.apply(self)
+        cfg.themeChanged.connect(lambda: StyleSheet.PAGE_TWO.apply(self))
 
         self.handler = PageTwoHandler(self)
         self.pushButton.clicked.connect(self.on_import_button_clicked)

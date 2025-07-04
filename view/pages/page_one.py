@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QWidget
 from common.utils import show_dialog, StyleSheet
+from common.config import cfg
 from components.bar import ProgressInfoBar 
 from ui_page.ui_page_one import Ui_page_one
 from view.pages.page_one_handler import PageOneHandler 
@@ -13,6 +14,7 @@ class PageOne(QWidget, Ui_page_one):
 
         # ✅ 套用当前主题对应的样式表
         StyleSheet.PAGE_ONE.apply(self)
+        cfg.themeChanged.connect(lambda: StyleSheet.PAGE_ONE.apply(self))
 
         self.handler = PageOneHandler(self)
 

@@ -3,6 +3,7 @@ from PySide6.QtGui import QStandardItemModel
 from ui_page.ui_page_three import Ui_page_three
 from view.pages.page_three_handler import PageThreeHandler
 from common.utils import StyleSheet
+from common.config import cfg
 
 
 class PageThree(QWidget, Ui_page_three):
@@ -12,9 +13,6 @@ class PageThree(QWidget, Ui_page_three):
 
         # ✅ 应用 Fluent 风格样式
         StyleSheet.PAGE_THREE.apply(self)
-
-        # ✅ 监听主题变化自动刷新样式
-        from common.config import cfg
         cfg.themeChanged.connect(lambda: StyleSheet.PAGE_THREE.apply(self))
 
         self.handler = PageThreeHandler(self)
