@@ -36,11 +36,13 @@ class Ui_page_top_in_class(object):
 "      ")
         self.gridLayout = QGridLayout(self.leftPanel)
         self.gridLayout.setObjectName(u"gridLayout")
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.labelExamList = QLabel(self.leftPanel)
         self.labelExamList.setObjectName(u"labelExamList")
         self.labelExamList.setStyleSheet(u"font-weight: bold; font-size: 14px;")
 
-        self.gridLayout.addWidget(self.labelExamList, 0, 0, 1, 1)
+        self.verticalLayout_2.addWidget(self.labelExamList)
 
         self.listView = QListView(self.leftPanel)
         self.listView.setObjectName(u"listView")
@@ -65,7 +67,10 @@ class Ui_page_top_in_class(object):
 "           }\n"
 "         ")
 
-        self.gridLayout.addWidget(self.listView, 1, 0, 1, 1)
+        self.verticalLayout_2.addWidget(self.listView)
+
+
+        self.gridLayout.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
 
 
         self.horizontalLayout.addWidget(self.leftPanel)

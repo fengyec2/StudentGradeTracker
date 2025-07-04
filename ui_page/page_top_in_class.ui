@@ -31,19 +31,21 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="labelExamList">
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold; font-size: 14px;</string>
-        </property>
-        <property name="text">
-         <string>选择考试</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QListView" name="listView">
-        <property name="styleSheet">
-         <string notr="true">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="labelExamList">
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 14px;</string>
+          </property>
+          <property name="text">
+           <string>选择考试</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListView" name="listView">
+          <property name="styleSheet">
+           <string notr="true">
            QListView {
              border: 1px solid #dcdfe6;
              border-radius: 4px;
@@ -63,8 +65,10 @@
              border-left: 3px solid #409eff;
            }
          </string>
-        </property>
-       </widget>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
