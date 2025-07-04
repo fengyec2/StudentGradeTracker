@@ -2,8 +2,6 @@
   <qresource prefix="resource">
     <file>qss/dark/login_window.qss</file>
     <file>qss/light/login_window.qss</file>
-    <file>images/login_background.png</file>
-    <file>images/login_background_dark.png</file>
     <file>images/logo.png</file>
     <file>qss/dark/main_window.qss</file>
     <file>qss/light/main_window.qss</file>
