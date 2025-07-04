@@ -3,9 +3,9 @@
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![PySide6](https://img.shields.io/badge/PySide6-6.0+-green.svg)
 
-一个 Fluent Design 风格 UI 的学生成绩跟踪分析工具，提供成绩可视化、趋势分析和班级对比功能。
+一个 Fluent Design 风格 UI 的学生成绩跟踪分析工具，提供成绩可视化、趋势分析和班级对比等功能。
 
-模板来自 [Cheukfung](https://github.com/Cheukfung/pyqt-fluent-widgets-template)
+模板来自 [Cheukfung/pyqt-fluent-widgets-template](https://github.com/Cheukfung/pyqt-fluent-widgets-template)
 
 ## ✨ 功能特性
 
@@ -15,11 +15,17 @@
 | 📊 成绩曲线 | ✅ 已实现 |
 | 📂 个人成绩 | ✅ 已实现 |
 | 🎎 班级成绩 | ✅ 已实现 |
+| 🎎 班单科王 | ✅ 已实现 |
+| 🎎 第一对比 | ✅ 已实现 |
 | ⚙️ 系统设置 | ✅ 已实现 |
 
-|  原始文件  |  成绩曲线  |  个人成绩  |  班级成绩  |
-|-----------|-----------|------------|------------|
-| ![原始文件](screen_shot/raw_data.png "原始文件") | ![成绩曲线](screen_shot/trend_chart.png "成绩曲线") | ![个人成绩](screen_shot/score_table.png "个人成绩") | ![班级成绩](screen_shot/class_compare.png "M班级成绩") |
+|  原始文件  |  成绩曲线  |  个人成绩  |
+|-----------|-----------|------------|
+| ![原始文件](screen_shot/raw_data.png "原始文件") | ![成绩曲线](screen_shot/trend_chart.png "成绩曲线") | ![个人成绩](screen_shot/score_table.png "个人成绩") |
+
+|  班级成绩  |  班单科王  |  个人成绩  |
+|-----------|-----------|------------|
+| ![班级成绩](screen_shot/class_compare.png "班级成绩") | ![班单科王](screen_shot/top_in_class.png "班单科王") | ![第一对比](screen_shot/top_in_grade.png "第一对比") |
 
 ## 🚀 快速开始
 
@@ -32,8 +38,8 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/Cheukfung/pyqt-fluent-widgets-template.git
-cd pyqt-fluent-widgets-template
+git clone https://github.com/fengyec2/StudentGradeTracker.git
+cd StudentGradeTracker
 
 # 安装依赖
 pip install -r requirements.txt
@@ -56,16 +62,16 @@ python entry.py
 ├── ui_page/                # Qt Designer UI文件
 ├── view/                   # 视图层
 ├── worker/                 # 异步任务管理
-├── build.py                # 打包脚本
+├── build_xxx.py            # 打包脚本
 ├── entry.py                # 程序入口
 └── pack_resources.py       # 资源编译脚本
 ```
 
 ## 🛠 开发指南
 
-### UI设计流程
+### UI 设计流程
 
-1. 使用 Qt Designer 编辑 `ui_page/` 目录下的.ui文件
+1. 使用 Qt Designer 编辑 `ui_page/` 目录下的 .ui 文件
 2. 保存修改后运行资源打包脚本：
    ```bash
    python pack_resources.py
@@ -79,14 +85,20 @@ python entry.py
 
 ### 数据存储规范
 
-```plaintext
+```bash
 data/
-├── exams/                  # 考试原始Excel文件
-├── students/               # 学生成绩JSON数据
-└── exam_meta.json          # 考试元数据
+├── exams/                  # 所有考试原始文件
+│   ├── 期中_2023-04.xlsx   # 文件名包含关键信息
+│   └── 月考_2023-05.xlsx
+│
+├── students/               # 按学生归档
+│   ├── 张三.json           # 结构见下文
+│   └── 李四.json
+│
+└── exam_meta.json          # 考试顺序管理
 ```
 
-**exam_meta.json示例**:
+**`exam_meta.json` - 考试顺序控制**:
 ```json
 {
   "exams_order": [
@@ -99,7 +111,7 @@ data/
 }
 ```
 
-**学生数据示例**:
+**`students/张三.json` - 学生数据**:
 ```json
 {
   "student": "张三",
