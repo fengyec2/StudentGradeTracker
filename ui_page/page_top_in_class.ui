@@ -41,7 +41,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QListView" name="examListView">
+       <widget class="QListView" name="listView">
         <property name="styleSheet">
          <string notr="true">
            QListView {
@@ -78,61 +78,46 @@
         padding: 10px;
       </string>
      </property>
-     <widget class="QLabel" name="labelChartTitle">
-      <property name="geometry">
-       <rect>
-        <x>19</x>
-        <y>91</y>
-        <width>140</width>
-        <height>38</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font-weight: bold; font-size: 14px;</string>
-      </property>
-      <property name="text">
-       <string>班级单科王对比图</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="chartWidget" native="true">
-      <property name="geometry">
-       <rect>
-        <x>19</x>
-        <y>163</y>
-        <width>458</width>
-        <height>400</height>
-       </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>400</height>
-       </size>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="classComboBox">
-      <property name="geometry">
-       <rect>
-        <x>220</x>
-        <y>20</y>
-        <width>80</width>
-        <height>38</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="labelClass">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>20</y>
-        <width>86</width>
-        <height>36</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>选择班级：</string>
-      </property>
-     </widget>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="labelClass">
+            <property name="text">
+             <string>选择班级：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxClass"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelChartTitle">
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 14px;</string>
+          </property>
+          <property name="text">
+           <string>班级单科王对比图</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widgetChart" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>400</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

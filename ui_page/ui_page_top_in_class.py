@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGridLayout,
     QHBoxLayout, QLabel, QListView, QSizePolicy,
-    QWidget)
+    QVBoxLayout, QWidget)
 
 class Ui_page_top_in_class(object):
     def setupUi(self, page_top_in_class):
@@ -42,9 +42,9 @@ class Ui_page_top_in_class(object):
 
         self.gridLayout.addWidget(self.labelExamList, 0, 0, 1, 1)
 
-        self.examListView = QListView(self.leftPanel)
-        self.examListView.setObjectName(u"examListView")
-        self.examListView.setStyleSheet(u"\n"
+        self.listView = QListView(self.leftPanel)
+        self.listView.setObjectName(u"listView")
+        self.listView.setStyleSheet(u"\n"
 "           QListView {\n"
 "             border: 1px solid #dcdfe6;\n"
 "             border-radius: 4px;\n"
@@ -65,7 +65,7 @@ class Ui_page_top_in_class(object):
 "           }\n"
 "         ")
 
-        self.gridLayout.addWidget(self.examListView, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.listView, 1, 0, 1, 1)
 
 
         self.horizontalLayout.addWidget(self.leftPanel)
@@ -77,20 +77,40 @@ class Ui_page_top_in_class(object):
 "        border-radius: 8px;\n"
 "        padding: 10px;\n"
 "      ")
-        self.labelChartTitle = QLabel(self.rightPanel)
-        self.labelChartTitle.setObjectName(u"labelChartTitle")
-        self.labelChartTitle.setGeometry(QRect(19, 91, 140, 38))
-        self.labelChartTitle.setStyleSheet(u"font-weight: bold; font-size: 14px;")
-        self.chartWidget = QWidget(self.rightPanel)
-        self.chartWidget.setObjectName(u"chartWidget")
-        self.chartWidget.setGeometry(QRect(19, 163, 458, 400))
-        self.chartWidget.setMinimumSize(QSize(0, 400))
-        self.classComboBox = QComboBox(self.rightPanel)
-        self.classComboBox.setObjectName(u"classComboBox")
-        self.classComboBox.setGeometry(QRect(220, 20, 80, 38))
+        self.gridLayout_2 = QGridLayout(self.rightPanel)
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.labelClass = QLabel(self.rightPanel)
         self.labelClass.setObjectName(u"labelClass")
-        self.labelClass.setGeometry(QRect(20, 20, 86, 36))
+
+        self.horizontalLayout_2.addWidget(self.labelClass)
+
+        self.comboBoxClass = QComboBox(self.rightPanel)
+        self.comboBoxClass.setObjectName(u"comboBoxClass")
+
+        self.horizontalLayout_2.addWidget(self.comboBoxClass)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
+
+        self.labelChartTitle = QLabel(self.rightPanel)
+        self.labelChartTitle.setObjectName(u"labelChartTitle")
+        self.labelChartTitle.setStyleSheet(u"font-weight: bold; font-size: 14px;")
+
+        self.verticalLayout.addWidget(self.labelChartTitle)
+
+        self.widgetChart = QWidget(self.rightPanel)
+        self.widgetChart.setObjectName(u"widgetChart")
+        self.widgetChart.setMinimumSize(QSize(0, 400))
+
+        self.verticalLayout.addWidget(self.widgetChart)
+
+
+        self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
+
 
         self.horizontalLayout.addWidget(self.rightPanel)
 
@@ -103,7 +123,7 @@ class Ui_page_top_in_class(object):
     def retranslateUi(self, page_top_in_class):
         page_top_in_class.setWindowTitle(QCoreApplication.translate("page_top_in_class", u"\u73ed\u7ea7\u5355\u79d1\u738b\u8868\u73b0", None))
         self.labelExamList.setText(QCoreApplication.translate("page_top_in_class", u"\u9009\u62e9\u8003\u8bd5", None))
-        self.labelChartTitle.setText(QCoreApplication.translate("page_top_in_class", u"\u73ed\u7ea7\u5355\u79d1\u738b\u5bf9\u6bd4\u56fe", None))
         self.labelClass.setText(QCoreApplication.translate("page_top_in_class", u"\u9009\u62e9\u73ed\u7ea7\uff1a", None))
+        self.labelChartTitle.setText(QCoreApplication.translate("page_top_in_class", u"\u73ed\u7ea7\u5355\u79d1\u738b\u5bf9\u6bd4\u56fe", None))
     # retranslateUi
 
