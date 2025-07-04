@@ -40,6 +40,10 @@ QComboBox {
     color: #dddddd;
 }
 
+QComboBox:hover {
+    border: 1px solid #70d5f3;
+}
+
 QWidget#widgetChart {
     background-color: #2a2a2a;
 }
