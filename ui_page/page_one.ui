@@ -28,49 +28,16 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">
-        background-color: white;
-        border-radius: 8px;
-        padding: 10px;
-      </string>
-     </property>
      <layout class="QVBoxLayout" name="leftLayout">
       <item>
        <widget class="QLabel" name="labelExamList">
-        <property name="styleSheet">
-         <string notr="true">font-weight: bold; font-size: 14px;</string>
-        </property>
         <property name="text">
          <string>已导入的考试</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QListView" name="listView">
-        <property name="styleSheet">
-         <string notr="true">
-           QListView {
-             border: 1px solid #dcdfe6;
-             border-radius: 4px;
-             padding: 4px;
-             background-color: #ffffff;
-           }
-           QListView::item {
-             padding: 8px 12px;
-             border-bottom: 1px solid #ebeef5;
-           }
-           QListView::item:hover {
-             background-color: #f5f7fa;
-           }
-           QListView::item:selected {
-             background-color: #ecf5ff;
-             color: #409eff;
-             border-left: 3px solid #409eff;
-           }
-         </string>
-        </property>
-       </widget>
+       <widget class="QListView" name="listView"/>
       </item>
       <item>
        <layout class="QHBoxLayout" name="buttonLayout">
@@ -107,17 +74,6 @@
             <height>38</height>
            </size>
           </property>
-          <property name="styleSheet">
-           <string notr="true">
-             QPushButton {
-               color: #ff4d4f;
-               border: 1px solid #ffccc7;
-             }
-             QPushButton:hover {
-               background-color: #fff2f0;
-             }
-           </string>
-          </property>
           <property name="text">
            <string>删除</string>
           </property>
@@ -132,19 +88,9 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QFrame" name="upperRightPanel">
-       <property name="styleSheet">
-        <string notr="true">
-        background-color: white;
-        border-radius: 8px;
-        padding: 10px;
-      </string>
-       </property>
        <layout class="QVBoxLayout" name="rightLayout_2">
         <item>
          <widget class="QLabel" name="labelPreview_2">
-          <property name="styleSheet">
-           <string notr="true">font-weight: bold; font-size: 14px;</string>
-          </property>
           <property name="text">
            <string>考试信息</string>
           </property>
@@ -191,19 +137,9 @@
      </item>
      <item>
       <widget class="QFrame" name="rightPanel">
-       <property name="styleSheet">
-        <string notr="true">
-        background-color: white;
-        border-radius: 8px;
-        padding: 10px;
-      </string>
-       </property>
        <layout class="QVBoxLayout" name="rightLayout">
         <item>
          <widget class="QLabel" name="labelPreview">
-          <property name="styleSheet">
-           <string notr="true">font-weight: bold; font-size: 14px;</string>
-          </property>
           <property name="text">
            <string>数据预览</string>
           </property>
@@ -211,22 +147,6 @@
         </item>
         <item>
          <widget class="QTableView" name="tableView">
-          <property name="styleSheet">
-           <string notr="true">
-           QTableView {
-             border: 1px solid #ddd;
-             border-radius: 4px;
-             gridline-color: #f0f0f0;
-           }
-           QHeaderView::section {
-             background-color: #f7f7f7;
-             padding: 5px;
-             border: none;
-             min-height: 40px;  /* 显式设置高度 */
-             min-width: 40px;  /* 显式设置宽度 */
-           }
-         </string>
-          </property>
           <property name="alternatingRowColors">
            <bool>true</bool>
           </property>

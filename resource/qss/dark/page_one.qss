@@ -1,0 +1,48 @@
+QWidget#leftPanel, QWidget#rightPanel, QWidget#upperRightPanel {
+    background-color: #2c2c2c;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+QLabel {
+    color: #dddddd;
+    font-size: 14px;
+}
+
+QListView {
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 4px;
+    background-color: #1e1e1e;
+    color: #dddddd;
+}
+
+QListView::item {
+    padding: 8px 12px;
+    border-bottom: 1px solid #3a3a3a;
+}
+QListView::item:hover {
+    background-color: #353535;
+}
+QListView::item:selected {
+    background-color: #3f578f;
+    color: #ffffff;
+    border-left: 3px solid #70d5f3;
+}
+
+QTableView {
+    border: 1px solid #555;
+    border-radius: 6px;
+    gridline-color: #666;
+    background-color: #2a2a2a;
+    color: #dddddd;
+}
+
+QHeaderView::section {
+    background-color: #3b3b3b;
+    padding: 5px;
+    border: none;
+    min-height: 40px;
+    color: #ffffff;
+    font-weight: bold;
+}
