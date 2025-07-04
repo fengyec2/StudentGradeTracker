@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>page_top_in_grade</class>
+ <widget class="QWidget" name="page_top_in_grade">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>班级第一与年级第一对比</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QFrame" name="leftPanel">
+     <property name="maximumSize">
+      <size>
+       <width>280</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+        background-color: white;
+        border-radius: 8px;
+        padding: 10px;
+      </string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="labelExamList">
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 14px;</string>
+          </property>
+          <property name="text">
+           <string>选择考试</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListView" name="listView">
+          <property name="styleSheet">
+           <string notr="true">
+           QListView {
+             border: 1px solid #dcdfe6;
+             border-radius: 4px;
+             padding: 4px;
+             background-color: #ffffff;
+           }
+           QListView::item {
+             padding: 8px 12px;
+             border-bottom: 1px solid #ebeef5;
+           }
+           QListView::item:hover {
+             background-color: #f5f7fa;
+           }
+           QListView::item:selected {
+             background-color: #ecf5ff;
+             color: #409eff;
+             border-left: 3px solid #409eff;
+           }
+         </string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="rightPanel">
+     <property name="styleSheet">
+      <string notr="true">
+        background-color: white;
+        border-radius: 8px;
+        padding: 10px;
+      </string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="labelClass">
+            <property name="text">
+             <string>选择班级：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxClass"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelChartTitle">
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 14px;</string>
+          </property>
+          <property name="text">
+           <string>班级第一&amp;年级第一对比图</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widgetChart" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>400</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

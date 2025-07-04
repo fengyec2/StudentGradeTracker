@@ -11,6 +11,7 @@ from view.pages.page_two import PageTwo
 from view.pages.page_three import PageThree
 from view.pages.page_class_grade import PageClassGrade
 from view.pages.page_top_in_class import PageTopInClass
+from view.pages.page_top_in_grade import PageTopInGrade
 from view.pages.setting_page import SettingInterface
 
 import resource_rc
@@ -33,6 +34,7 @@ class MainWindow(FluentWindow):
         self.pageThree = PageThree(self)
         self.pageClassGrade = PageClassGrade(self)
         self.pageTopInClass = PageTopInClass(self)
+        self.pageTopInGrade = PageTopInGrade(self)
         self.init_navigation()
         self.init_window()
 
@@ -46,7 +48,8 @@ class MainWindow(FluentWindow):
             {'widget': self.pageTwo, 'icon': MyIcon.EXCEL, 'text': '成绩曲线'},
             {'widget': self.pageThree, 'icon': MyIcon.TOOL, 'text': '个人成绩'},
             {'widget': self.pageClassGrade, 'icon': MyIcon.CLASS, 'text': '班级成绩'},
-            {'widget': self.pageTopInClass, 'icon': MyIcon.CLASS, 'text': '班级单科王'},
+            {'widget': self.pageTopInClass, 'icon': MyIcon.CLASS, 'text': '班单科王'},
+            {'widget': self.pageTopInGrade, 'icon': MyIcon.CLASS, 'text': '第一对比'},
         ]
         for item in sub_interface_list:
             self.addSubInterface(item['widget'], item['icon'], item['text'])
