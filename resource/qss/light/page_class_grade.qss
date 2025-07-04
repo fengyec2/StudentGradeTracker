@@ -1,0 +1,60 @@
+QFrame#frameQueryCard, QFrame#frameResultCard {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+}
+
+QLabel {
+    color: #2e2e2e;
+}
+
+QListWidget {
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    padding: 4px;
+    background-color: #ffffff;
+    color: #2e2e2e;
+}
+
+QListWidget::item {
+    padding: 8px 12px;
+    border-bottom: 1px solid #ebeef5;
+}
+
+QListWidget::item:hover {
+    background-color: #f5f7fa;
+}
+
+QListWidget::item:selected {
+    background-color: #ecf5ff;
+    color: #409eff;
+    border-left: 3px solid #409eff;
+}
+
+QTableWidget {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    gridline-color: #f0f0f0;
+    color: #2e2e2e;
+    background-color: #ffffff;
+}
+
+QHeaderView::section {
+    background-color: #f7f7f7;
+    padding: 5px;
+    border: none;
+    min-height: 30px;
+    color: #2e2e2e;
+}
+
+QLineEdit {
+    background-color: #ffffff;
+    color: #2e2e2e;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+QWidget#widgetChart {
+    background-color: #f0f0f0;
+}

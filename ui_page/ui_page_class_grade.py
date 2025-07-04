@@ -43,11 +43,6 @@ class Ui_page_class_grade(object):
         sizePolicy1.setHeightForWidth(self.frameQueryCard.sizePolicy().hasHeightForWidth())
         self.frameQueryCard.setSizePolicy(sizePolicy1)
         self.frameQueryCard.setMaximumSize(QSize(16777215, 100))
-        self.frameQueryCard.setStyleSheet(u"QFrame {\n"
-"    background-color: white;\n"
-"    border-radius: 10px;\n"
-"    border: 1px solid #dcdcdc;\n"
-"}")
         self.frameQueryCard.setFrameShape(QFrame.Shape.NoFrame)
         self.horizontalLayout = QHBoxLayout(self.frameQueryCard)
         self.horizontalLayout.setSpacing(10)
@@ -87,26 +82,6 @@ class Ui_page_class_grade(object):
         self.listClasses = QListWidget(self.frameQueryCard)
         self.listClasses.setObjectName(u"listClasses")
         self.listClasses.setMinimumSize(QSize(100, 0))
-        self.listClasses.setStyleSheet(u"\n"
-"           QListView {\n"
-"             border: 1px solid #dcdfe6;\n"
-"             border-radius: 4px;\n"
-"             padding: 4px;\n"
-"             background-color: #ffffff;\n"
-"           }\n"
-"           QListView::item {\n"
-"             padding: 8px 12px;\n"
-"             border-bottom: 1px solid #ebeef5;\n"
-"           }\n"
-"           QListView::item:hover {\n"
-"             background-color: #f5f7fa;\n"
-"           }\n"
-"           QListView::item:selected {\n"
-"             background-color: #ecf5ff;\n"
-"             color: #409eff;\n"
-"             border-left: 3px solid #409eff;\n"
-"           }\n"
-"         ")
         self.listClasses.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
 
         self.horizontalLayout.addWidget(self.listClasses)
@@ -124,11 +99,6 @@ class Ui_page_class_grade(object):
 
         self.frameResultCard = QFrame(page_class_grade)
         self.frameResultCard.setObjectName(u"frameResultCard")
-        self.frameResultCard.setStyleSheet(u"QFrame {\n"
-"    background-color: white;\n"
-"    border-radius: 10px;\n"
-"    border: 1px solid #dcdcdc;\n"
-"}")
         self.frameResultCard.setFrameShape(QFrame.Shape.NoFrame)
         self.verticalLayout_2 = QVBoxLayout(self.frameResultCard)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -165,7 +135,6 @@ class Ui_page_class_grade(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.widgetChart = QWidget(self.tabChart_2)
         self.widgetChart.setObjectName(u"widgetChart")
-        self.widgetChart.setStyleSheet(u"background-color: #f0f0f0;")
 
         self.verticalLayout_4.addWidget(self.widgetChart)
 
