@@ -40,6 +40,9 @@ class Ui_page_one(object):
         self.leftLayout.setObjectName(u"leftLayout")
         self.labelExamList = QLabel(self.leftPanel)
         self.labelExamList.setObjectName(u"labelExamList")
+        font = QFont()
+        font.setBold(True)
+        self.labelExamList.setFont(font)
 
         self.leftLayout.addWidget(self.labelExamList)
 
@@ -83,6 +86,7 @@ class Ui_page_one(object):
         self.rightLayout_2.setObjectName(u"rightLayout_2")
         self.labelPreview_2 = QLabel(self.upperRightPanel)
         self.labelPreview_2.setObjectName(u"labelPreview_2")
+        self.labelPreview_2.setFont(font)
 
         self.rightLayout_2.addWidget(self.labelPreview_2)
 
@@ -95,6 +99,8 @@ class Ui_page_one(object):
 
         self.btnEditExamName = QPushButton(self.upperRightPanel)
         self.btnEditExamName.setObjectName(u"btnEditExamName")
+        self.btnEditExamName.setMinimumSize(QSize(0, 38))
+        self.btnEditExamName.setMaximumSize(QSize(150, 16777215))
 
         self.examNameLayout.addWidget(self.btnEditExamName)
 
@@ -110,6 +116,8 @@ class Ui_page_one(object):
 
         self.btnEditExamDate = QPushButton(self.upperRightPanel)
         self.btnEditExamDate.setObjectName(u"btnEditExamDate")
+        self.btnEditExamDate.setMinimumSize(QSize(0, 38))
+        self.btnEditExamDate.setMaximumSize(QSize(150, 16777215))
 
         self.examDateLayout.addWidget(self.btnEditExamDate)
 
@@ -125,6 +133,7 @@ class Ui_page_one(object):
         self.rightLayout.setObjectName(u"rightLayout")
         self.labelPreview = QLabel(self.rightPanel)
         self.labelPreview.setObjectName(u"labelPreview")
+        self.labelPreview.setFont(font)
 
         self.rightLayout.addWidget(self.labelPreview)
 

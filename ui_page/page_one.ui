@@ -31,6 +31,11 @@
      <layout class="QVBoxLayout" name="leftLayout">
       <item>
        <widget class="QLabel" name="labelExamList">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>已导入的考试</string>
         </property>
@@ -91,6 +96,11 @@
        <layout class="QVBoxLayout" name="rightLayout_2">
         <item>
          <widget class="QLabel" name="labelPreview_2">
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>考试信息</string>
           </property>
@@ -107,6 +117,18 @@
           </item>
           <item>
            <widget class="QPushButton" name="btnEditExamName">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>38</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="text">
              <string>修改</string>
             </property>
@@ -125,6 +147,18 @@
           </item>
           <item>
            <widget class="QPushButton" name="btnEditExamDate">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>38</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="text">
              <string>修改</string>
             </property>
@@ -140,6 +174,11 @@
        <layout class="QVBoxLayout" name="rightLayout">
         <item>
          <widget class="QLabel" name="labelPreview">
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
            <string>数据预览</string>
           </property>
