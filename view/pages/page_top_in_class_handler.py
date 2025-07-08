@@ -5,9 +5,12 @@ from PySide6.QtWidgets import QVBoxLayout, QMessageBox
 from PySide6.QtCharts import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis
 from PySide6.QtGui import QPainter, QFont
 
+from common.utils import load_exam_meta, get_all_students, get_student_data
+
 DATA_DIR = "data"
 STUDENTS_DIR = os.path.join(DATA_DIR, "students")
 EXAM_META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
+
 
 class PageTopInClassHandler:
     def __init__(self, view):
@@ -20,13 +23,9 @@ class PageTopInClassHandler:
         self.view.comboBoxClass.currentIndexChanged.connect(self.on_class_selected)
 
     def init_exam_list(self):
-        # 加载考试列表，填充左侧 QListView
-        try:
-            with open(EXAM_META_PATH, "r", encoding="utf-8") as f:
-                meta = json.load(f)
-            exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"])
-        except Exception:
-            exams = []
+        # 使用公用函数加载考试元数据
+        meta = load_exam_meta()
+        exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"])
 
         exam_names = [exam["display_name"] for exam in exams]
         self.exam_mapping = {exam["display_name"]: exam["filename"] for exam in exams}
@@ -35,19 +34,17 @@ class PageTopInClassHandler:
         self.view.listView.setModel(self.exam_model)
 
     def init_class_list(self):
-        # 从学生文件收集班级列表
+        # 使用公用函数获取所有学生，再提取班级列表
+        students = get_all_students()
         class_set = set()
-        if os.path.exists(STUDENTS_DIR):
-            for file in os.listdir(STUDENTS_DIR):
-                if file.endswith(".json"):
-                    try:
-                        with open(os.path.join(STUDENTS_DIR, file), "r", encoding="utf-8") as f:
-                            student = json.load(f)
-                            cls = student.get("class", "").strip()
-                            if cls:
-                                class_set.add(cls)
-                    except Exception:
-                        continue
+        for student_info in students:
+            student_name = student_info.get("name")
+            student_data = get_student_data(student_name)
+            if not student_data:
+                continue
+            cls = student_data.get("class", "").strip()
+            if cls:
+                class_set.add(cls)
         classes = sorted(class_set, key=lambda x: int(x) if x.isdigit() else x)
         self.view.comboBoxClass.clear()
         self.view.comboBoxClass.addItems(classes)
@@ -80,34 +77,32 @@ class PageTopInClassHandler:
             QMessageBox.warning(self.view, "错误", f"找不到考试文件对应的元数据: {exam_name}")
             return
 
-        # 加载所有学生数据，找出班级单科王和年级单科王
+        # 使用公用函数获取所有学生列表
+        students = get_all_students()
+
         subject_max_in_class = {}
         subject_max_in_grade = {}
 
-        for file in os.listdir(STUDENTS_DIR):
-            if not file.endswith(".json"):
+        for student_info in students:
+            student_name = student_info.get("name")
+            student = get_student_data(student_name)
+            if not student:
                 continue
-            path = os.path.join(STUDENTS_DIR, file)
-            try:
-                with open(path, "r", encoding="utf-8") as f:
-                    student = json.load(f)
-                student_class = student.get("class")
-                exams = student.get("exams", [])
-                for exam in exams:
-                    if exam.get("filename") != exam_filename:
-                        continue
-                    for subj in exam.get("subjects", []):
-                        subject = subj.get("subject")
-                        score = subj.get("score", 0)
-                        # 记录年级最高分
-                        if subject not in subject_max_in_grade or score > subject_max_in_grade[subject]:
-                            subject_max_in_grade[subject] = score
-                        # 记录班级最高分
-                        if student_class == class_name:
-                            if subject not in subject_max_in_class or score > subject_max_in_class[subject]:
-                                subject_max_in_class[subject] = score
-            except Exception:
-                continue
+            student_class = student.get("class")
+            exams = student.get("exams", [])
+            for exam in exams:
+                if exam.get("filename") != exam_filename:
+                    continue
+                for subj in exam.get("subjects", []):
+                    subject = subj.get("subject")
+                    score = subj.get("score", 0)
+                    # 记录年级最高分
+                    if subject not in subject_max_in_grade or score > subject_max_in_grade[subject]:
+                        subject_max_in_grade[subject] = score
+                    # 记录班级最高分
+                    if student_class == class_name:
+                        if subject not in subject_max_in_class or score > subject_max_in_class[subject]:
+                            subject_max_in_class[subject] = score
 
         # 准备图表数据：科目列表，班级第一，年级第一
         subjects = sorted(set(subject_max_in_class.keys()).union(subject_max_in_grade.keys()))
