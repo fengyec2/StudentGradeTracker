@@ -4,37 +4,19 @@ import shutil
 import pandas as pd
 from datetime import datetime
 
-from PySide6.QtCore import QObject, QAbstractListModel, Qt, QModelIndex
+from PySide6.QtCore import QObject
 from PySide6.QtWidgets import (
     QFileDialog, QDialog, QVBoxLayout, QLabel, QMessageBox,
     QLineEdit, QDateEdit, QPushButton, QHBoxLayout, QInputDialog
 )
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 
-from common.utils import show_dialog, load_exam_meta, get_all_students, get_student_data
+from common.utils import show_dialog, load_exam_meta, get_all_students, get_student_data, ExamListModel
 
 DATA_DIR = "data"
 EXAMS_DIR = os.path.join(DATA_DIR, "exams")
 STUDENTS_DIR = os.path.join(DATA_DIR, "students")
 META_PATH = os.path.join(DATA_DIR, "exam_meta.json")
-
-
-class ExamListModel(QAbstractListModel):
-    def __init__(self, exams):
-        super().__init__()
-        self.exams = exams
-
-    def data(self, index: QModelIndex, role):
-        if role == Qt.DisplayRole:
-            return self.exams[index.row()]['display_name']
-
-    def rowCount(self, parent=QModelIndex()):
-        return len(self.exams)
-
-    def get_exam(self, row):
-        return self.exams[row] if 0 <= row < len(self.exams) else None
-
-
 class ExamEditDialog(QDialog):
     def __init__(self, display_name='', real_date=None):
         super().__init__()

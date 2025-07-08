@@ -4,6 +4,7 @@ import json
 from enum import Enum
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QLabel
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
 from qfluentwidgets import Theme, Dialog, StyleSheetBase, qconfig
 from common.my_logger import my_logger as logger
 
@@ -100,3 +101,25 @@ def get_exam_display_name(filename):
             if exam["filename"] == filename:
                 return exam["display_name"]
     return filename
+
+
+class ExamListModel(QAbstractListModel):
+    """
+    通用考试列表模型，适用于绑定考试元数据列表到 QListView 等视图。
+    """
+
+    def __init__(self, exams=None):
+        super().__init__()
+        self.exams = exams if exams is not None else []
+
+    def data(self, index: QModelIndex, role):
+        if role == Qt.DisplayRole and index.isValid():
+            return self.exams[index.row()]['display_name']
+
+    def rowCount(self, parent=QModelIndex()):
+        return len(self.exams)
+
+    def get_exam(self, row):
+        if 0 <= row < len(self.exams):
+            return self.exams[row]
+        return None

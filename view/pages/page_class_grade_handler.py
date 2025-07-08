@@ -7,8 +7,8 @@ from PySide6.QtCharts import QChart, QChartView, QBarSet, QBarSeries, QBarCatego
 from PySide6.QtGui import QPainter
 # from PySide6.QtCore import QAbstractListModel, Qt, QModelIndex
 
-from common.utils import show_dialog, load_exam_meta  # ✅ 替代 json+路径硬编码
-from view.pages.page_one_handler import ExamListModel  # ✅ 复用模型类
+from common.utils import show_dialog, load_exam_meta, ExamListModel  # ✅ 替代 json+路径硬编码
+# from view.pages.page_one_handler import ExamListModel  # ✅ 复用模型类
 
 DATA_DIR = "data"
 STUDENTS_DIR = os.path.join(DATA_DIR, "students")
