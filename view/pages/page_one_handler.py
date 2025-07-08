@@ -49,7 +49,7 @@ class ExamEditDialog(QDialog):
 
 
 class PageOneHandler(QObject):
-    def __init__(self, parent: 'PageOne'):
+    def __init__(self, parent):
         super().__init__(parent)
         self._parent = parent
         self._exam_model = None
