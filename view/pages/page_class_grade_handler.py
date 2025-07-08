@@ -33,7 +33,8 @@ class PageClassGradeHandler:
         """采用统一模型方式加载考试列表"""
         try:
             meta = load_exam_meta()
-            exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"])
+            # 倒序显示（最新在上）
+            exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"], reverse=True)
             self._exam_model = ExamListModel(exams)
         except Exception as e:
             show_dialog(self.ui, f"加载考试元数据失败：{e}")

@@ -23,7 +23,8 @@ class PageTopInGradeHandler:
 
     def init_exam_list(self):
         meta = load_exam_meta()
-        exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"])
+        # 倒序显示（最新在上）
+        exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"], reverse=True)
 
         exam_names = [exam["display_name"] for exam in exams]
         self.exam_mapping = {exam["display_name"]: exam["filename"] for exam in exams}
