@@ -1,9 +1,10 @@
 import os
-import json
 from PySide6.QtCore import QStringListModel, Qt
 from PySide6.QtWidgets import QVBoxLayout, QMessageBox
 from PySide6.QtCharts import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis
 from PySide6.QtGui import QPainter, QFont
+
+from common.utils import load_exam_meta, get_all_students, get_student_data
 
 DATA_DIR = "data"
 STUDENTS_DIR = os.path.join(DATA_DIR, "students")
@@ -21,12 +22,8 @@ class PageTopInGradeHandler:
         self.view.comboBoxClass.currentIndexChanged.connect(self.on_class_selected)
 
     def init_exam_list(self):
-        try:
-            with open(EXAM_META_PATH, "r", encoding="utf-8") as f:
-                meta = json.load(f)
-            exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"])
-        except Exception:
-            exams = []
+        meta = load_exam_meta()
+        exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"])
 
         exam_names = [exam["display_name"] for exam in exams]
         self.exam_mapping = {exam["display_name"]: exam["filename"] for exam in exams}
@@ -36,17 +33,15 @@ class PageTopInGradeHandler:
 
     def init_class_list(self):
         class_set = set()
-        if os.path.exists(STUDENTS_DIR):
-            for file in os.listdir(STUDENTS_DIR):
-                if file.endswith(".json"):
-                    try:
-                        with open(os.path.join(STUDENTS_DIR, file), "r", encoding="utf-8") as f:
-                            student = json.load(f)
-                            cls = student.get("class", "").strip()
-                            if cls:
-                                class_set.add(cls)
-                    except Exception:
-                        continue
+        students = get_all_students()
+        for student_info in students:
+            student_name = student_info.get("name")
+            student_data = get_student_data(student_name)
+            if not student_data:
+                continue
+            cls = student_data.get("class", "").strip()
+            if cls:
+                class_set.add(cls)
         classes = sorted(class_set, key=lambda x: int(x) if x.isdigit() else x)
         self.view.comboBoxClass.clear()
         self.view.comboBoxClass.addItems(classes)
@@ -83,30 +78,27 @@ class PageTopInGradeHandler:
         highest_class_total = -1
         highest_grade_total = -1
 
-        for file in os.listdir(STUDENTS_DIR):
-            if not file.endswith(".json"):
+        students = get_all_students()
+        for student_info in students:
+            student_name = student_info.get("name")
+            student = get_student_data(student_name)
+            if not student:
                 continue
-            path = os.path.join(STUDENTS_DIR, file)
-            try:
-                with open(path, "r", encoding="utf-8") as f:
-                    student = json.load(f)
-                student_class = student.get("class", "")
-                exams = student.get("exams", [])
-                for exam in exams:
-                    if exam.get("filename") != exam_filename:
-                        continue
-                    subjects = exam.get("subjects", [])
-                    total_score = sum(subj.get("score", 0) for subj in subjects)
+            student_class = student.get("class", "")
+            exams = student.get("exams", [])
+            for exam in exams:
+                if exam.get("filename") != exam_filename:
+                    continue
+                subjects = exam.get("subjects", [])
+                total_score = sum(subj.get("score", 0) for subj in subjects)
 
-                    if student_class == class_name and total_score > highest_class_total:
-                        highest_class_total = total_score
-                        top_in_class = {subj["subject"]: subj["score"] for subj in subjects}
+                if student_class == class_name and total_score > highest_class_total:
+                    highest_class_total = total_score
+                    top_in_class = {subj["subject"]: subj["score"] for subj in subjects}
 
-                    if total_score > highest_grade_total:
-                        highest_grade_total = total_score
-                        top_in_grade = {subj["subject"]: subj["score"] for subj in subjects}
-            except Exception:
-                continue
+                if total_score > highest_grade_total:
+                    highest_grade_total = total_score
+                    top_in_grade = {subj["subject"]: subj["score"] for subj in subjects}
 
         if not top_in_class or not top_in_grade:
             QMessageBox.information(self.view, "提示", "未能找到对应数据")
