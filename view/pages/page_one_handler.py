@@ -11,8 +11,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 
-from common.utils import show_dialog, load_exam_meta
-# from workers.TaskManager import task_manager
+from common.utils import show_dialog, load_exam_meta, get_all_students, get_student_data
 
 DATA_DIR = "data"
 EXAMS_DIR = os.path.join(DATA_DIR, "exams")
@@ -83,7 +82,7 @@ class PageOneHandler(QObject):
     def load_exam_list(self):
         try:
             meta = load_exam_meta()
-            # ✅ 注意 reverse=True，PageOne 是倒序显示（最新在上）
+            # 倒序显示（最新在上）
             exams = sorted(meta.get("exams_order", []), key=lambda e: e["real_date"], reverse=True)
             self._exam_model = ExamListModel(exams)
         except Exception as e:
@@ -92,8 +91,6 @@ class PageOneHandler(QObject):
     
         # ✅ 一定要重新设置 model，绑定到 listView
         self._parent.listView.setModel(self._exam_model)
-
-
 
     def import_exam(self):
         filepath, _ = QFileDialog.getOpenFileName(self._parent, "选择考试 Excel 文件", "", "Excel 文件 (*.xlsx)")
@@ -110,11 +107,6 @@ class PageOneHandler(QObject):
         if not required_columns.issubset(set(df.columns)):
             show_dialog(self._parent, "Excel 中必须包含 '姓名'、'级名' 和 '班级' 三列")
             return
-
-        preview_info = {
-            "subjects": len([col for col in df.columns if col not in ["姓名", "级名", "班级", "考试编号"]]),
-            "students": df.shape[0]
-        }
 
         dialog = ExamEditDialog()
         if dialog.exec() != QDialog.Accepted:
@@ -133,14 +125,13 @@ class PageOneHandler(QObject):
             rank = row.get("级名", None)
             subjects = [
                 {"subject": col, "score": row[col], "rank": None}
-                for col in df.columns if col not in ["姓名", "级名", "班级"]
+                for col in df.columns if col not in ["姓名", "级名", "班级", "考试编号"]
             ]
             student_path = os.path.join(STUDENTS_DIR, f"{name}.json")
 
-            if os.path.exists(student_path):
-                with open(student_path, "r", encoding="utf-8") as f:
-                    student_data = json.load(f)
-            else:
+            # 优先调用 get_student_data 读取，避免重复代码
+            student_data = get_student_data(name)
+            if not student_data:
                 student_data = {"student": name, "class": student_class, "exams": []}
 
             if "class" not in student_data or not student_data["class"]:
@@ -156,12 +147,8 @@ class PageOneHandler(QObject):
             with open(student_path, "w", encoding="utf-8") as f:
                 json.dump(student_data, f, ensure_ascii=False, indent=2)
 
-        if os.path.exists(META_PATH):
-            with open(META_PATH, "r", encoding="utf-8") as f:
-                meta = json.load(f)
-        else:
-            meta = {"exams_order": []}
-
+        # 使用公用加载元数据，修改后写回
+        meta = load_exam_meta()
         meta["exams_order"].append({
             "filename": filename,
             "display_name": display_name,
@@ -249,7 +236,6 @@ class PageOneHandler(QObject):
         if changed:
             # ✅ 对 exams_order 按 real_date 升序排序
             meta["exams_order"] = sorted(meta["exams_order"], key=lambda e: e["real_date"])
-    
             with open(META_PATH, "w", encoding="utf-8") as f:
                 json.dump(meta, f, ensure_ascii=False, indent=2)
 
@@ -258,7 +244,6 @@ class PageOneHandler(QObject):
                 self._parent.listView.setCurrentIndex(self._exam_model.index(self._selected_index))
                 self.on_exam_selected(self._exam_model.index(self._selected_index))
 
-    
     def delete_exam(self):
         if not hasattr(self, "_selected_index"):
             show_dialog(self._parent, "请先选择一个考试")
@@ -274,7 +259,6 @@ class PageOneHandler(QObject):
             f"确定要删除考试：{exam['display_name']}？该操作无法恢复！",
             QMessageBox.Yes | QMessageBox.No
         )
-
 
         if confirm != QMessageBox.Yes:
             return
@@ -292,8 +276,7 @@ class PageOneHandler(QObject):
 
         # 2. 删除元数据
         try:
-            with open(META_PATH, "r", encoding="utf-8") as f:
-                meta = json.load(f)
+            meta = load_exam_meta()
             meta["exams_order"] = [e for e in meta["exams_order"] if e["filename"] != filename]
             with open(META_PATH, "w", encoding="utf-8") as f:
                 json.dump(meta, f, ensure_ascii=False, indent=2)
@@ -302,20 +285,21 @@ class PageOneHandler(QObject):
             return
 
         # 3. 删除学生 JSON 中对应考试记录
-        for file in os.listdir(STUDENTS_DIR):
-            if not file.endswith(".json"):
+        students = get_all_students()
+        for student_info in students:
+            student_name = student_info.get("name")
+            student_path = os.path.join(STUDENTS_DIR, f"{student_name}.json")
+            student = get_student_data(student_name)
+            if not student:
                 continue
-            path = os.path.join(STUDENTS_DIR, file)
-            try:
-                with open(path, "r", encoding="utf-8") as f:
-                    student = json.load(f)
-                new_exams = [e for e in student.get("exams", []) if e.get("filename") != filename]
-                if len(new_exams) < len(student.get("exams", [])):
-                    student["exams"] = new_exams
-                    with open(path, "w", encoding="utf-8") as f:
+            new_exams = [e for e in student.get("exams", []) if e.get("filename") != filename]
+            if len(new_exams) < len(student.get("exams", [])):
+                student["exams"] = new_exams
+                try:
+                    with open(student_path, "w", encoding="utf-8") as f:
                         json.dump(student, f, ensure_ascii=False, indent=2)
-            except Exception:
-                continue  # 忽略错误
+                except Exception:
+                    continue  # 忽略写文件错误
 
         show_dialog(self._parent, f"已删除考试：{exam['display_name']}")
         self.load_exam_list()
