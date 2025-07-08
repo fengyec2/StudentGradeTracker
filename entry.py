@@ -19,6 +19,7 @@ app.setAttribute(Qt.ApplicationAttribute.AA_DontCreateNativeWidgetSiblings)  # è
 translator = QTranslator()
 translator.load(":/resource/i18n/zh.qm")
 app.installTranslator(translator)
+app.setStyleSheet("*:focus { outline: none; }")
 
 
 def main():
