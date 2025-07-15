@@ -44,12 +44,12 @@ class MainWindow(FluentWindow):
     def init_navigation(self):
         # 新增页面需要再此处添加
         sub_interface_list = [
-            {'widget': self.pageOne, 'icon': MyIcon.CLICK, 'text': '原始文件'},
-            {'widget': self.pageTwo, 'icon': MyIcon.EXCEL, 'text': '成绩曲线'},
-            {'widget': self.pageThree, 'icon': MyIcon.TOOL, 'text': '个人成绩'},
-            {'widget': self.pageClassGrade, 'icon': MyIcon.CLASS, 'text': '班级成绩'},
-            {'widget': self.pageTopInClass, 'icon': MyIcon.CLASS, 'text': '班单科王'},
-            {'widget': self.pageTopInGrade, 'icon': MyIcon.CLASS, 'text': '第一对比'},
+            {'widget': self.pageOne, 'icon': MyIcon.FOLDER, 'text': '原始文件'},
+            {'widget': self.pageTwo, 'icon': MyIcon.CHART, 'text': '成绩曲线'},
+            {'widget': self.pageThree, 'icon': MyIcon.SHEET, 'text': '个人成绩'},
+            {'widget': self.pageClassGrade, 'icon': MyIcon.PEOPLE, 'text': '班级成绩'},
+            {'widget': self.pageTopInClass, 'icon': MyIcon.CROWN, 'text': '班单科王'},
+            {'widget': self.pageTopInGrade, 'icon': MyIcon.HAT, 'text': '第一对比'},
         ]
         for item in sub_interface_list:
             self.addSubInterface(item['widget'], item['icon'], item['text'])

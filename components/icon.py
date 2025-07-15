@@ -17,6 +17,12 @@ class MyIcon(FluentIconBase, Enum):
     SETTING = 'setting'
     ADD = 'add'
     CLASS = 'class'
+    CHART = 'chart'
+    CROWN = 'crown'
+    FOLDER = 'folder'
+    PEOPLE = 'people'
+    SHEET = 'sheet'
+    HAT = 'hat'
 
     def path(self, theme=Theme.AUTO):
         if theme == Theme.AUTO:
