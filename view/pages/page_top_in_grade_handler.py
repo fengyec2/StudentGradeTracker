@@ -1,7 +1,7 @@
 import os
 from PySide6.QtCore import QStringListModel, Qt
 from PySide6.QtWidgets import QVBoxLayout, QMessageBox
-from PySide6.QtCharts import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis
+from PySide6.QtCharts import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis, QValueAxis
 from PySide6.QtGui import QPainter, QFont
 
 from common.utils import load_exam_meta, get_all_students, get_student_data
@@ -112,6 +112,7 @@ class PageTopInGradeHandler:
         self.draw_chart(all_subjects, class_scores, grade_scores)
 
     def draw_chart(self, subjects, class_scores, grade_scores):
+        # 清理旧图表
         layout = self.view.widgetChart.layout()
         if layout:
             while layout.count():
@@ -123,11 +124,16 @@ class PageTopInGradeHandler:
             layout = QVBoxLayout(self.view.widgetChart)
             self.view.widgetChart.setLayout(layout)
 
+        # 创建柱状图数据
         set_class = QBarSet(f"{self.view.comboBoxClass.currentText()}班总分第一")
         set_grade = QBarSet("年级总分第一")
 
         set_class.append(class_scores)
         set_grade.append(grade_scores)
+
+        # 设置柱子颜色
+        set_class.setColor(Qt.blue)
+        set_grade.setColor(Qt.red)
 
         series = QBarSeries()
         series.append(set_class)
@@ -138,16 +144,89 @@ class PageTopInGradeHandler:
         chart.setTitle(f"考试【{self.view.listView.currentIndex().data()}】总分第一成绩对比")
         chart.setAnimationOptions(QChart.SeriesAnimations)
 
-        axis = QBarCategoryAxis()
-        axis.append(subjects)
-        chart.createDefaultAxes()
-        chart.setAxisX(axis, series)
+        # 创建坐标轴
+        axis_x = QBarCategoryAxis()
+        axis_x.append(subjects)
+        
+        axis_y = QValueAxis()
+        # 设置Y轴范围，留出空间显示数值标签
+        max_score = max(max(class_scores) if class_scores else 0, max(grade_scores) if grade_scores else 0)
+        axis_y.setRange(0, max_score * 1.1)  # 增加10%的空间
+        
+        chart.addAxis(axis_x, Qt.AlignBottom)
+        chart.addAxis(axis_y, Qt.AlignLeft)
+        series.attachAxis(axis_x)
+        series.attachAxis(axis_y)
 
+        # 显示中文字体（微软雅黑）
         font = QFont("微软雅黑", 10)
         chart.setTitleFont(font)
-        axis.setLabelsFont(font)
+        axis_x.setLabelsFont(font)
+        axis_y.setLabelsFont(font)
 
         chart_view = QChartView(chart)
         chart_view.setRenderHint(QPainter.Antialiasing)
 
+        # 连接信号以添加数值标签
+        series.hovered.connect(lambda status, index, barset: self.on_bar_hovered(status, index, barset, chart_view))
+        
+        # 添加数值标签
+        self.add_value_labels(chart_view, series, subjects, class_scores, grade_scores)
+
         layout.addWidget(chart_view)
+
+    def add_value_labels(self, chart_view, series, subjects, class_scores, grade_scores):
+        """在柱状图上添加数值标签"""
+        from PySide6.QtWidgets import QLabel
+        from PySide6.QtCore import QTimer
+        
+        # 使用定时器确保图表完全渲染后再添加标签
+        QTimer.singleShot(100, lambda: self._add_labels_delayed(chart_view, series, subjects, class_scores, grade_scores))
+
+    def _add_labels_delayed(self, chart_view, series, subjects, class_scores, grade_scores):
+        """延迟添加标签的实际实现"""
+        from PySide6.QtWidgets import QLabel
+        from PySide6.QtCore import QPoint
+        from PySide6.QtGui import QFont
+        
+        chart = chart_view.chart()
+        
+        # 为班级总分第一的柱子添加标签
+        for i, score in enumerate(class_scores):
+            if score > 0:
+                label = QLabel(str(int(score)), chart_view)
+                label.setAlignment(Qt.AlignCenter)
+                label.setFont(QFont("微软雅黑", 8))
+                label.setStyleSheet("color: blue; background-color: rgba(255, 255, 255, 180); border-radius: 3px; padding: 2px;")
+                
+                # 计算标签位置
+                bar_rect = chart.plotArea()
+                bar_width = bar_rect.width() / len(subjects)
+                x = bar_rect.x() + (i + 0.25) * bar_width
+                y = bar_rect.y() + bar_rect.height() - (score / (max(max(class_scores) if class_scores else 0, max(grade_scores) if grade_scores else 0) * 1.1)) * bar_rect.height() - 20
+                
+                label.move(int(x), int(y))
+                label.show()
+
+        # 为年级总分第一的柱子添加标签
+        for i, score in enumerate(grade_scores):
+            if score > 0:
+                label = QLabel(str(int(score)), chart_view)
+                label.setAlignment(Qt.AlignCenter)
+                label.setFont(QFont("微软雅黑", 8))
+                label.setStyleSheet("color: red; background-color: rgba(255, 255, 255, 180); border-radius: 3px; padding: 2px;")
+                
+                # 计算标签位置
+                bar_rect = chart.plotArea()
+                bar_width = bar_rect.width() / len(subjects)
+                x = bar_rect.x() + (i + 0.75) * bar_width
+                y = bar_rect.y() + bar_rect.height() - (score / (max(max(class_scores) if class_scores else 0, max(grade_scores) if grade_scores else 0) * 1.1)) * bar_rect.height() - 20
+                
+                label.move(int(x), int(y))
+                label.show()
+
+    def on_bar_hovered(self, status, index, barset, chart_view):
+        """处理柱子悬停事件"""
+        if status:
+            # 可以在这里添加更多的交互效果
+            pass
