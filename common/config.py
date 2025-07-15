@@ -6,7 +6,7 @@ from qfluentwidgets import (qconfig, QConfig, ConfigItem, BoolValidator, ColorCo
 
 class MyQConfig(QConfig):
     # 自定义fluent默认主题颜色
-    themeColor = ColorConfigItem("QFluentWidgets", "ThemeColor", '#70d5f3')
+    themeColor = ColorConfigItem("QFluentWidgets", "ThemeColor", '#409EFF')
 
 
 class Config(MyQConfig):
@@ -21,7 +21,7 @@ class Config(MyQConfig):
 
 YEAR = datetime.datetime.now().year
 AUTHOR = "fengyec_2"
-VERSION = '1.1.0'
+VERSION = '1.1.2'
 FEEDBACK_URL = "https://github.com/fengyec2"
 
 cfg = Config()
