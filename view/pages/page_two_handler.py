@@ -57,6 +57,11 @@ class PageTwoHandler:
         axis_y.setRange(0, max(max_rank + 50, 100))
         axis_y.setReverse(True)
 
+        # 启用数据标签显示
+        series.setPointLabelsVisible(True)
+        series.setPointLabelsFormat("@yPoint")  # 显示Y轴的值（排名）
+        series.setPointLabelsClipping(False)    # 允许标签超出绘图区域
+
         chart = QChart()
         chart.addSeries(series)
         chart.setTitle(f"{student_name} - 年级排名变化图")
