@@ -19,6 +19,8 @@ class PageThree(QWidget, Ui_page_three):
         self.student_model = QStandardItemModel(self.listView)
         self.listView.setModel(self.student_model)
 
+        self.handler.load_student_list(self.student_model)
+
         # 按钮点击事件：刷新学生列表
         self.pushButton.clicked.connect(self.on_import_button_clicked)
 

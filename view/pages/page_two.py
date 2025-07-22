@@ -21,7 +21,7 @@ class PageTwo(QWidget, Ui_page_two):
         # 初始化学生列表
         self.student_model = QStandardItemModel(self.listView)
         self.listView.setModel(self.student_model)
-
+        self.handler.load_student_list(self.student_model)
 
         # 绑定选中信号
         self.listView.clicked.connect(self.on_student_selected)
