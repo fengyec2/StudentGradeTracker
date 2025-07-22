@@ -44,6 +44,21 @@ QComboBox:hover {
     border: 1px solid #70d5f3;
 }
 
+QComboBox::drop-down {
+    border: none;
+    width: 20px;
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    selection-background-color: #3f578f;
+    selection-color: white;
+    color: #dddddd;
+}
+
 QWidget#widgetChart {
     background-color: #2a2a2a;
 }
