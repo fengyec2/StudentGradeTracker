@@ -54,7 +54,7 @@ class MainWindow(FluentWindow):
         for item in sub_interface_list:
             self.addSubInterface(item['widget'], item['icon'], item['text'])
 
-        self.addSubInterface(self.settingInterface, FIF.SETTING, '设置', NavigationItemPosition.BOTTOM)
+        self.addSubInterface(self.settingInterface, MyIcon.SETTING, '设置', NavigationItemPosition.BOTTOM)
 
     def init_window(self):
         if sys.platform != "darwin":
