@@ -5,6 +5,24 @@ import site
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+def format_xml_without_empty_lines(element, level=0):
+    """
+    手动格式化XML，避免minidom产生的空行问题
+    """
+    indent = "    " * level
+    if len(element):
+        if not element.text or not element.text.strip():
+            element.text = f"\n{indent}    "
+        if not element.tail or not element.tail.strip():
+            element.tail = f"\n{indent}"
+        for child in element:
+            format_xml_without_empty_lines(child, level + 1)
+        if not child.tail or not child.tail.strip():
+            child.tail = f"\n{indent}"
+    else:
+        if level and (not element.tail or not element.tail.strip()):
+            element.tail = f"\n{indent}"
+
 def update_qrc_with_resources(qrc_file="resource/resource.qrc", qss_dir="resource/qss", svg_dir="resource/images/icons"):
     """自动将qss文件和svg文件添加到qrc资源文件中"""
     # 确保目录存在
@@ -79,20 +97,54 @@ def update_qrc_with_resources(qrc_file="resource/resource.qrc", qss_dir="resourc
    
     # 如果有新增文件，则写入qrc文件
     if total_added_files:
-        # 美化XML输出
-        from xml.dom import minidom
-        xml_str = ET.tostring(root, encoding="utf-8")
-        pretty_xml = minidom.parseString(xml_str).toprettyxml(indent="    ")
-       
+        # 使用自定义的格式化函数，避免空行问题
+        format_xml_without_empty_lines(root)
+        
+        # 创建XML声明和格式化输出
+        xml_declaration = '<?xml version="1.0" encoding="UTF-8"?>\n'
+        xml_content = ET.tostring(root, encoding="unicode")
+        
+        # 确保qrc文件目录存在
+        os.makedirs(os.path.dirname(qrc_file), exist_ok=True)
+        
         # 写入文件
         with open(qrc_file, "w", encoding="utf-8") as f:
-            f.write(pretty_xml)
+            f.write(xml_declaration + xml_content)
         print(f"已更新 {qrc_file}，总共新增了 {len(total_added_files)} 个资源文件")
     else:
         print(f"{qrc_file} 无需更新，没有新增的资源文件")
 
+def clean_existing_qrc_file(qrc_file="resource/resource.qrc"):
+    """清理现有qrc文件中的空行问题"""
+    if not os.path.exists(qrc_file):
+        print(f"文件 {qrc_file} 不存在")
+        return
+    
+    try:
+        # 解析现有文件
+        tree = ET.parse(qrc_file)
+        root = tree.getroot()
+        
+        # 重新格式化
+        format_xml_without_empty_lines(root)
+        
+        # 写回文件
+        xml_declaration = '<?xml version="1.0" encoding="UTF-8"?>\n'
+        xml_content = ET.tostring(root, encoding="unicode")
+        
+        with open(qrc_file, "w", encoding="utf-8") as f:
+            f.write(xml_declaration + xml_content)
+            
+        print(f"已清理 {qrc_file} 中的空行")
+        
+    except ET.ParseError as e:
+        print(f"解析qrc文件失败: {e}")
+
 def main():
-    # 1. 首先更新qrc文件，包含所有qss文件和svg文件
+    # 0. 首先清理现有qrc文件中的空行（可选）
+    clean_existing_qrc_file()
+    
+    # 1. 然后更新qrc文件，包含所有qss文件和svg文件
     update_qrc_with_resources()
    
     # 2. 找到site-packages目录
@@ -110,12 +162,12 @@ def main():
    
     # 6. 编译ui文件
     ui_files = os.listdir('ui_page')
-    ui_views = os.listdir('ui_view')
+    # ui_views = os.listdir('ui_view')
    
-    for ui_view in ui_views:
-        if ui_view.endswith('.ui'):
-            output = f"ui_view/ui_{ui_view.split('.')[0]}.py"
-            os.system(f"pyside6-uic ui_view/{ui_view} -o {output}")
+    # for ui_view in ui_views:
+    #     if ui_view.endswith('.ui'):
+    #         output = f"ui_view/ui_{ui_view.split('.')[0]}.py"
+    #         os.system(f"pyside6-uic ui_view/{ui_view} -o {output}")
    
     for ui_file in ui_files:
         if ui_file.endswith('.ui'):
