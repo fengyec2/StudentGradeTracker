@@ -17,6 +17,9 @@ class PageTopInGrade(QWidget, Ui_page_top_in_grade):
         
         self.handler = PageTopInGradeHandler(self)
 
+        # 按钮点击事件：刷新列表
+        self.pushButton.clicked.connect(self.on_import_button_clicked)
+
     def show_state_tooltip(self, title, content):
         self.loading_bar = ProgressInfoBar(title, content, self)
         self.loading_bar.show()
@@ -30,6 +33,6 @@ class PageTopInGrade(QWidget, Ui_page_top_in_grade):
         show_dialog(self, msg, '提示')
 
     # 新增的刷新方法（可选）
-    def refresh(self):
+    def on_import_button_clicked(self):
         self.handler.init_exam_list()
         self.handler.init_class_list()

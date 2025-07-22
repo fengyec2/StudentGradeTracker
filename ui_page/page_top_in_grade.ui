@@ -36,7 +36,33 @@
          </widget>
         </item>
         <item>
-         <widget class="QListView" name="listView">
+         <widget class="QListView" name="listView"/>
+        </item>
+        <item>
+         <widget class="PrimaryPushButton" name="pushButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>35</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Microsoft YaHei</family>
+           </font>
+          </property>
+          <property name="text">
+           <string>刷新</string>
+          </property>
+          <property name="default">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
        </layout>
@@ -90,6 +116,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PrimaryPushButton</class>
+   <extends>QPushButton</extends>
+   <header>qfluentwidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
