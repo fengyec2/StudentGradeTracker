@@ -168,3 +168,10 @@ QPushButton.danger:pressed {
     background-color: #a12629;
     border-color: #a12629;
 }
+
+/* QWidget 白天模式基础样式 */
+QWidget {
+    background-color: #ffffff;
+    color: #2e2e2e;
+    border: none;
+}
