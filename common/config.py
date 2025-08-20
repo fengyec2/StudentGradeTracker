@@ -21,7 +21,7 @@ class Config(MyQConfig):
 
 YEAR = datetime.datetime.now().year
 AUTHOR = "fengyec_2"
-VERSION = '1.1.2'
+VERSION = '1.1.3'
 FEEDBACK_URL = "https://github.com/fengyec2"
 
 cfg = Config()
