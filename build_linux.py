@@ -5,7 +5,7 @@ app_name = 'StudentGradeTracker'
 build_command = "nuitka --standalone --enable-plugin=pyside6 "
 build_command += "--assume-yes-for-downloads "
 build_command += "--linux-icon=resource/images/logo.png --output-dir=out "
-build_command += f"--linux-onefile-icon=resource/images/logo.png "
+build_command += f"--linux-onefile-icon=resource/images/logo.ico "
 build_command += f"--product-name={app_name} "
 build_command += f"--product-version={VERSION} "
 build_command += "--follow-import-to=common,components,view entry.py"
