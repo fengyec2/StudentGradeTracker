@@ -59,3 +59,112 @@ QComboBox QAbstractItemView {
     selection-color: white;
     color: #dddddd;
 }
+
+/* QPushButton Fluent Style - 黑夜模式 */
+QPushButton {
+    background-color: #3a3a3a;
+    border: 1px solid #555555;
+    border-radius: 6px;
+    color: #dddddd;
+    padding: 8px 16px;
+    outline: none;
+}
+
+/* 悬停效果 */
+QPushButton:hover {
+    background-color: #454545;
+    border-color: #666666;
+}
+
+/* 按下效果 */
+QPushButton:pressed {
+    background-color: #2c2c2c;
+    border-color: #444444;
+}
+
+/* 禁用状态 */
+QPushButton:disabled {
+    background-color: #2a2a2a;
+    border-color: #444444;
+    color: #888888;
+}
+
+/* 焦点状态 */
+QPushButton:focus {
+    border: 2px solid #70d5f3;
+    padding: 7px 15px; /* 调整内边距以保持总尺寸不变 */
+}
+
+/* 主要/强调按钮样式 */
+QPushButton.primary {
+    background-color: #3f578f;
+    border-color: #3f578f;
+    color: white;
+}
+
+QPushButton.primary:hover {
+    background-color: #4a65a8;
+    border-color: #4a65a8;
+}
+
+QPushButton.primary:pressed {
+    background-color: #354a7a;
+    border-color: #354a7a;
+}
+
+QPushButton.primary:disabled {
+    background-color: #2a3a5c;
+    border-color: #2a3a5c;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* 成功按钮样式 */
+QPushButton.success {
+    background-color: #107c10;
+    border-color: #107c10;
+    color: white;
+}
+
+QPushButton.success:hover {
+    background-color: #139413;
+    border-color: #139413;
+}
+
+QPushButton.success:pressed {
+    background-color: #0c5c0c;
+    border-color: #0c5c0c;
+}
+
+/* 警告按钮样式 */
+QPushButton.warning {
+    background-color: #d83b01;
+    border-color: #d83b01;
+    color: white;
+}
+
+QPushButton.warning:hover {
+    background-color: #f3450a;
+    border-color: #f3450a;
+}
+
+QPushButton.warning:pressed {
+    background-color: #b83201;
+    border-color: #b83201;
+}
+
+/* 危险按钮样式 */
+QPushButton.danger {
+    background-color: #d13438;
+    border-color: #d13438;
+    color: white;
+}
+
+QPushButton.danger:hover {
+    background-color: #e03c40;
+    border-color: #e03c40;
+}
+
+QPushButton.danger:pressed {
+    background-color: #b02a2d;
+    border-color: #b02a2d;
+}

@@ -59,3 +59,112 @@ QComboBox QAbstractItemView {
     selection-color: #409eff;
     color: #2e2e2e;
 }
+
+/* QPushButton Fluent Style */
+QPushButton {
+    background-color: #ffffff;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    color: #2e2e2e;
+    padding: 8px 16px;
+    outline: none;
+}
+
+/* 悬停效果 */
+QPushButton:hover {
+    background-color: #f5f5f5;
+    border-color: #c6c6c6;
+}
+
+/* 按下效果 */
+QPushButton:pressed {
+    background-color: #e6e6e6;
+    border-color: #b5b5b5;
+}
+
+/* 禁用状态 */
+QPushButton:disabled {
+    background-color: #f8f8f8;
+    border-color: #e1e1e1;
+    color: #a0a0a0;
+}
+
+/* 焦点状态 */
+QPushButton:focus {
+    border: 2px solid #0078d4;
+    padding: 7px 15px; /* 调整内边距以保持总尺寸不变 */
+}
+
+/* 主要/强调按钮样式 */
+QPushButton.primary {
+    background-color: #0078d4;
+    border-color: #0078d4;
+    color: white;
+}
+
+QPushButton.primary:hover {
+    background-color: #106ebe;
+    border-color: #106ebe;
+}
+
+QPushButton.primary:pressed {
+    background-color: #005a9e;
+    border-color: #005a9e;
+}
+
+QPushButton.primary:disabled {
+    background-color: #b3dbf2;
+    border-color: #b3dbf2;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 成功按钮样式 */
+QPushButton.success {
+    background-color: #107c10;
+    border-color: #107c10;
+    color: white;
+}
+
+QPushButton.success:hover {
+    background-color: #0e6c0e;
+    border-color: #0e6c0e;
+}
+
+QPushButton.success:pressed {
+    background-color: #0c5c0c;
+    border-color: #0c5c0c;
+}
+
+/* 警告按钮样式 */
+QPushButton.warning {
+    background-color: #d83b01;
+    border-color: #d83b01;
+    color: white;
+}
+
+QPushButton.warning:hover {
+    background-color: #bf3501;
+    border-color: #bf3501;
+}
+
+QPushButton.warning:pressed {
+    background-color: #a62e01;
+    border-color: #a62e01;
+}
+
+/* 危险按钮样式 */
+QPushButton.danger {
+    background-color: #d13438;
+    border-color: #d13438;
+    color: white;
+}
+
+QPushButton.danger:hover {
+    background-color: #b92c2f;
+    border-color: #b92c2f;
+}
+
+QPushButton.danger:pressed {
+    background-color: #a12629;
+    border-color: #a12629;
+}

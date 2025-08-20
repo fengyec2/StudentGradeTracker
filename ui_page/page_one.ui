@@ -82,6 +82,9 @@
           <property name="text">
            <string>删除</string>
           </property>
+          <property name="class" stdset="0">
+           <string>danger</string>
+          </property>
          </widget>
         </item>
        </layout>
