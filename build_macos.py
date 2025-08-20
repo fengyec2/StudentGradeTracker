@@ -4,7 +4,7 @@ from common.config import VERSION, AUTHOR
 app_name = 'StudentGradeTracker'
 build_command = "nuitka --standalone --enable-plugin=pyside6 "
 build_command += "--assume-yes-for-downloads "
-build_command += "--macos-app-mode "
+build_command += "--macos-app-mode=gui "
 build_command += "--macos-app-icon=resource/images/logo.png --output-dir=out "
 build_command += f"--macos-app-name={app_name} "
 build_command += f"--macos-app-version={VERSION} "
