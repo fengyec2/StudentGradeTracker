@@ -3,7 +3,7 @@ PySide6-Fluent-Widgets
 pycryptodome
 nuitka
 imageio
-pyside6
+pyside6==6.7.0
 matplotlib
 openpyxl
 pandas
